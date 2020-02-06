@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +26,8 @@ import com.powerdata.barcode.databinding.FragmentImportBinding;
 import com.powerdata.barcode.viewModel.ImportViewModel;
 
 import java.io.IOException;
+
+import es.dmoral.toasty.Toasty;
 
 public class ImportFragment extends Fragment {
 
@@ -55,13 +58,43 @@ public class ImportFragment extends Fragment {
         });
 
         viewModel.openDocumentAction
-                .observe(getViewLifecycleOwner(), new Observer<Void>() {
+                .observe(this, new Observer<Void>() {
                     @Override
                     public void onChanged(Void aVoid) {
                         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                         intent.addCategory(Intent.CATEGORY_OPENABLE);
                         intent.setType("*/*");
                         startActivityForResult(intent, PICK_FILE);
+                    }
+                });
+
+        viewModel.didSave
+                .observe(this, new Observer<Void>() {
+                    @Override
+                    public void onChanged(Void aVoid) {
+                        String message = getString(R.string.message_save_successfully);
+                        Toasty.success(requireContext(), message, Toast.LENGTH_SHORT, true)
+                                .show();
+                    }
+                });
+
+        viewModel.didSaveError
+                .observe(this, new Observer<Void>() {
+                    @Override
+                    public void onChanged(Void aVoid) {
+                        String message = getString(R.string.message_save_error);
+                        Toasty.warning(requireContext(), message, Toast.LENGTH_SHORT, true)
+                                .show();
+                    }
+                });
+
+        viewModel.didImport
+                .observe(this, new Observer<Void>() {
+                    @Override
+                    public void onChanged(Void aVoid) {
+                        String message = getString(R.string.message_import_successfully);
+                        Toasty.success(requireContext(), message, Toast.LENGTH_SHORT, true)
+                                .show();
                     }
                 });
 
