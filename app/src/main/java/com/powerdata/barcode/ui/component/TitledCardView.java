@@ -40,7 +40,6 @@ public class TitledCardView extends CardView {
     }
 
     public void setTitle(String title) {
-        System.out.println("title:" + title);
         this.mTitle = title;
         mTitleTextView.setText(title);
         invalidate();
@@ -52,7 +51,6 @@ public class TitledCardView extends CardView {
     }
 
     public void setSubtitle(String subtitle) {
-        System.out.println("subtitle:" + subtitle);
         this.mSubtitle = subtitle;
         mSubtitleTextView.setText(subtitle);
         invalidate();

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.powerdata.barcode.viewModel.ImportViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        tools:context=".ui.fragment.BarcodeDetailListFragment">
+
+        <TextView
+            android:id="@+id/ship_number_label_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_ship_no"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ship_number_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/orange"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ship_number_label_text_view"
+            app:layout_constraintStart_toEndOf="@+id/ship_number_label_text_view"
+            app:layout_constraintTop_toTopOf="@+id/ship_number_label_text_view"
+            tools:text="A" />
+
+        <TextView
+            android:id="@+id/status_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/text_status"
+            app:layout_constraintBottom_toBottomOf="@+id/ship_number_label_text_view"
+            app:layout_constraintStart_toEndOf="@+id/ship_number_text_view"
+            app:layout_constraintTop_toTopOf="@+id/ship_number_label_text_view" />
+
+        <Spinner
+            android:id="@+id/status_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/status_text_view"
+            app:layout_constraintStart_toEndOf="@+id/status_text_view"
+            app:layout_constraintTop_toTopOf="@+id/status_text_view" />
+
+        <EditText
+            android:id="@+id/barcode_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/hint_barcode_edit"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:text="@={viewModel.barcode}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ship_number_label_text_view" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/delete_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barcode_edit_text" />
+
+        <Button
+            android:id="@+id/delete_button"
+            style="@style/AppTheme.Button.Image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_action_delete"
+            android:text="@string/text_delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/export_button"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/export_button"
+            style="@style/AppTheme.Button.Image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_action_export"
+            android:text="@string/text_export"
+            app:layout_constraintBottom_toBottomOf="@+id/delete_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/delete_button"
+            app:layout_constraintTop_toTopOf="@+id/delete_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

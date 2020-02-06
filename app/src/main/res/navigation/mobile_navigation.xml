@@ -9,12 +9,26 @@
         android:id="@+id/navigation_import"
         android:name="com.powerdata.barcode.ui.fragment.ImportFragment"
         android:label="@string/title_import"
-        tools:layout="@layout/fragment_import" />
+        tools:layout="@layout/fragment_import">
+        <action
+            android:id="@+id/action_navigation_import_to_detail_list_fragment"
+            app:destination="@id/navigation_detail_list" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_collection"
         android:name="com.powerdata.barcode.ui.fragment.CollectionFragment"
         android:label="@string/title_collection"
         tools:layout="@layout/fragment_collection" />
+
+    <fragment
+        android:id="@+id/navigation_detail_list"
+        android:name="com.powerdata.barcode.ui.fragment.DetailListFragment"
+        android:label="@string/title_detail"
+        tools:layout="@layout/fragment_detail_list">
+        <argument
+            android:name="shipNo"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

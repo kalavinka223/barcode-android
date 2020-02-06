@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.powerdata.barcode.R;
 import com.powerdata.barcode.databinding.FragmentImportBinding;
@@ -31,8 +32,8 @@ import es.dmoral.toasty.Toasty;
 
 public class ImportFragment extends Fragment {
 
+    public static final String ARG_SHIP_NO = "arg_ship_no";
     private static final int PICK_FILE = 1;
-
     private ImportViewModel viewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -41,7 +42,7 @@ public class ImportFragment extends Fragment {
         binding.setLifecycleOwner(this);
         viewModel = ViewModelProviders.of(this).get(ImportViewModel.class);
         binding.setViewModel(viewModel);
-        View root = binding.getRoot();
+        final View root = binding.getRoot();
         setHasOptionsMenu(true);
 
         Spinner spinner = root.findViewById(R.id.ship_no_spinner);
@@ -95,6 +96,17 @@ public class ImportFragment extends Fragment {
                         String message = getString(R.string.message_import_successfully);
                         Toasty.success(requireContext(), message, Toast.LENGTH_SHORT, true)
                                 .show();
+                    }
+                });
+
+        viewModel.navigateDetails
+                .observe(this, new Observer<String>() {
+                    @Override
+                    public void onChanged(String s) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(ARG_SHIP_NO, s);
+                        NavHostFragment.findNavController(ImportFragment.this)
+                                .navigate(R.id.navigation_detail_list, bundle);
                     }
                 });
 

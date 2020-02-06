@@ -46,6 +46,7 @@ public class ImportViewModel extends ViewModel {
     public SingleLiveEvent<Void> didSave = new SingleLiveEvent<>();
     public SingleLiveEvent<Void> didSaveError = new SingleLiveEvent<>();
     public SingleLiveEvent<Void> didImport = new SingleLiveEvent<>();
+    public SingleLiveEvent<String> navigateDetails = new SingleLiveEvent<>();
 
     private LiveData<String> shipNo;
 
@@ -113,6 +114,10 @@ public class ImportViewModel extends ViewModel {
 
     public void onImportButtonClick() {
         openDocumentAction.call();
+    }
+
+    public void onViewDetailButtonClick() {
+        navigateDetails.postValue(shipNo.getValue());
     }
 
     private List<BarcodeDetail> build(Iterable<CSVRecord> records) {
