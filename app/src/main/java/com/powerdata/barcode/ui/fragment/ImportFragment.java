@@ -12,17 +12,20 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.powerdata.barcode.R;
+import com.powerdata.barcode.databinding.FragmentImportBinding;
 import com.powerdata.barcode.viewModel.ImportViewModel;
 
 public class ImportFragment extends Fragment {
 
-    private ImportViewModel homeViewModel;
+    private ImportViewModel viewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(ImportViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_import, container, false);
+        FragmentImportBinding binding = FragmentImportBinding.inflate(inflater);
+        binding.setLifecycleOwner(this);
+        viewModel = ViewModelProviders.of(this).get(ImportViewModel.class);
+        binding.setViewModel(viewModel);
+        View root = binding.getRoot();
         setHasOptionsMenu(true);
 
         return root;

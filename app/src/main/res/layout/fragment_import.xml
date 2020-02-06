@@ -1,125 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="8dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/ship_no_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/text_ship_no"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <Spinner
-        android:id="@+id/ship_no_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:entries="@array/ship_no_array"
-        app:layout_constraintBottom_toBottomOf="@+id/ship_no_text_view"
-        app:layout_constraintStart_toEndOf="@+id/ship_no_text_view"
-        app:layout_constraintTop_toTopOf="@+id/ship_no_text_view" />
+        <variable
+            name="viewModel"
+            type="com.powerdata.barcode.viewModel.ImportViewModel" />
+    </data>
 
-    <EditText
-        android:id="@+id/barcode_edit_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:hint="@string/hint_barcode_edit"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:singleLine="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ship_no_text_view" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp">
 
-    <com.powerdata.barcode.ui.component.TitledCardView
-        android:id="@+id/total_count_view"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toStartOf="@+id/scanned_count_view"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barcode_edit_text"
-        app:subtitle="总数" />
+        <TextView
+            android:id="@+id/ship_no_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/text_ship_no"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <com.powerdata.barcode.ui.component.TitledCardView
-        android:id="@+id/scanned_count_view"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/total_count_view"
-        app:layout_constraintEnd_toStartOf="@+id/not_scanned_count_view"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/total_count_view"
-        app:layout_constraintTop_toTopOf="@+id/total_count_view"
-        app:subtitle="已扫描" />
+        <Spinner
+            android:id="@+id/ship_no_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:entries="@array/ship_no_array"
+            app:layout_constraintBottom_toBottomOf="@+id/ship_no_text_view"
+            app:layout_constraintStart_toEndOf="@+id/ship_no_text_view"
+            app:layout_constraintTop_toTopOf="@+id/ship_no_text_view" />
 
-    <com.powerdata.barcode.ui.component.TitledCardView
-        android:id="@+id/not_scanned_count_view"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/error_count_view"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/scanned_count_view"
-        app:layout_constraintTop_toTopOf="@+id/total_count_view"
-        app:subtitle="未扫描" />
+        <EditText
+            android:id="@+id/barcode_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:hint="@string/hint_barcode_edit"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ship_no_text_view" />
 
-    <com.powerdata.barcode.ui.component.TitledCardView
-        android:id="@+id/error_count_view"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/total_count_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/not_scanned_count_view"
-        app:layout_constraintTop_toTopOf="@+id/total_count_view"
-        app:subtitle="失败" />
+        <com.powerdata.barcode.ui.component.TitledCardView
+            android:id="@+id/total_count_view"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toStartOf="@+id/scanned_count_view"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barcode_edit_text"
+            app:subtitle="总数" />
 
-    <Button
-        android:id="@+id/view_detail_button"
-        style="@style/AppTheme.Button.Image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableTop="@drawable/ic_action_details"
-        android:text="@string/text_view_detail"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/view_error_button"
-        app:layout_constraintStart_toStartOf="parent" />
+        <com.powerdata.barcode.ui.component.TitledCardView
+            android:id="@+id/scanned_count_view"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/total_count_view"
+            app:layout_constraintEnd_toStartOf="@+id/not_scanned_count_view"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/total_count_view"
+            app:layout_constraintTop_toTopOf="@+id/total_count_view"
+            app:subtitle="已扫描" />
 
-    <Button
-        android:id="@+id/view_error_button"
-        style="@style/AppTheme.Button.Image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableTop="@drawable/ic_action_details"
-        android:text="@string/text_view_error"
-        app:layout_constraintBottom_toBottomOf="@+id/view_detail_button"
-        app:layout_constraintEnd_toStartOf="@+id/import_csv_button"
-        app:layout_constraintStart_toEndOf="@+id/view_detail_button"
-        app:layout_constraintTop_toTopOf="@+id/view_detail_button" />
+        <com.powerdata.barcode.ui.component.TitledCardView
+            android:id="@+id/not_scanned_count_view"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/error_count_view"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/scanned_count_view"
+            app:layout_constraintTop_toTopOf="@+id/total_count_view"
+            app:subtitle="未扫描" />
 
-    <Button
-        android:id="@+id/import_csv_button"
-        style="@style/AppTheme.Button.Image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableTop="@drawable/ic_action_import_csv"
-        android:text="@string/text_import_file"
-        app:layout_constraintBottom_toBottomOf="@+id/view_detail_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/view_error_button"
-        app:layout_constraintTop_toTopOf="@+id/view_detail_button" />
+        <com.powerdata.barcode.ui.component.TitledCardView
+            android:id="@+id/error_count_view"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/total_count_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/not_scanned_count_view"
+            app:layout_constraintTop_toTopOf="@+id/total_count_view"
+            app:subtitle="失败" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/view_detail_button"
+            style="@style/AppTheme.Button.Image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_action_details"
+            android:text="@string/text_view_detail"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/view_error_button"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/view_error_button"
+            style="@style/AppTheme.Button.Image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_action_details"
+            android:text="@string/text_view_error"
+            app:layout_constraintBottom_toBottomOf="@+id/view_detail_button"
+            app:layout_constraintEnd_toStartOf="@+id/import_csv_button"
+            app:layout_constraintStart_toEndOf="@+id/view_detail_button"
+            app:layout_constraintTop_toTopOf="@+id/view_detail_button" />
+
+        <Button
+            android:id="@+id/import_csv_button"
+            style="@style/AppTheme.Button.Image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_action_import_csv"
+            android:text="@string/text_import_file"
+            app:layout_constraintBottom_toBottomOf="@+id/view_detail_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view_error_button"
+            app:layout_constraintTop_toTopOf="@+id/view_detail_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
