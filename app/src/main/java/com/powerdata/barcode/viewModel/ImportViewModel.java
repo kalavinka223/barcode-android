@@ -34,13 +34,15 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ImportViewModel extends ViewModel {
 
-    private final Function<Integer, String> int2StrFunc = new Function<Integer, String>() {
+    private final Function<Integer, String> int2Str = new Function<Integer, String>() {
         @Override
         public String apply(Integer input) {
             return String.valueOf(input);
         }
     };
+
     public MutableLiveData<String> barcode = new MutableLiveData<>();
+
     private ImportViewModelListener listener;
     private LiveData<Integer> totalCount;
     private LiveData<Integer> scannedCount;
@@ -91,19 +93,19 @@ public class ImportViewModel extends ViewModel {
     }
 
     public LiveData<String> getTotalCount() {
-        return Transformations.map(totalCount, int2StrFunc);
+        return Transformations.map(totalCount, int2Str);
     }
 
     public LiveData<String> getScannedCount() {
-        return Transformations.map(scannedCount, int2StrFunc);
+        return Transformations.map(scannedCount, int2Str);
     }
 
     public LiveData<String> getNotScannedCount() {
-        return Transformations.map(notScannedCount, int2StrFunc);
+        return Transformations.map(notScannedCount, int2Str);
     }
 
     public LiveData<String> getErrorCount() {
-        return Transformations.map(errorCount, int2StrFunc);
+        return Transformations.map(errorCount, int2Str);
     }
 
     private List<BarcodeDetail> build(Iterable<CSVRecord> records) {
