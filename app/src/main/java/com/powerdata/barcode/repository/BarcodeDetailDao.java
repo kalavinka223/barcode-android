@@ -1,5 +1,6 @@
 package com.powerdata.barcode.repository;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -28,8 +29,8 @@ public interface BarcodeDetailDao {
     Completable deleteByShipNo(String shipNo);
 
     @Query("select count(*) from barcode_detail where ship_no = :shipNo")
-    Flowable<Integer> countByShiNo(String shipNo);
+    LiveData<Integer> countByShiNo(String shipNo);
 
     @Query("select count(*) from barcode_detail where ship_no = :shipNo and status = :status")
-    Flowable<Integer> countByShiNoAndStatus(String shipNo, int status);
+    LiveData<Integer> countByShiNoAndStatus(String shipNo, int status);
 }

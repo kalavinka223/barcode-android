@@ -35,21 +35,25 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ImportViewModel extends ViewModel {
 
+    private final Function<Integer, String> int2StrFunc = new Function<Integer, String>() {
+        @Override
+        public String apply(Integer input) {
+            return String.valueOf(input);
+        }
+    };
     public MutableLiveData<Integer> shipNoItemPosition = new MutableLiveData<>();
     public MutableLiveData<String> barcode = new MutableLiveData<>();
     public SingleLiveEvent<Void> openDocumentAction = new SingleLiveEvent<>();
     public MutableLiveData<FileDescriptor> file = new MutableLiveData<>();
-    public LiveData<String> totalCount;
-    public LiveData<String> scannedCount;
-    public LiveData<String> notScannedCount;
-    public LiveData<String> errorCount;
     public SingleLiveEvent<Void> didSave = new SingleLiveEvent<>();
     public SingleLiveEvent<Void> didSaveError = new SingleLiveEvent<>();
     public SingleLiveEvent<Void> didImport = new SingleLiveEvent<>();
     public SingleLiveEvent<String> navigateDetails = new SingleLiveEvent<>();
-
+    private LiveData<Integer> totalCount;
+    private LiveData<Integer> scannedCount;
+    private LiveData<Integer> notScannedCount;
+    private LiveData<Integer> errorCount;
     private LiveData<String> shipNo;
-
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private BarcodeDetailDao detailDao = MyApplication.db.barcodeDetailDao();
     private BarcodeErrorDao errorDao = MyApplication.db.barcodeErrorDao();
@@ -69,40 +73,49 @@ public class ImportViewModel extends ViewModel {
             }
         });
 
-        Function<Integer, String> int2StrFunc = new Function<Integer, String>() {
-            @Override
-            public String apply(Integer input) {
-                return String.valueOf(input);
-            }
-        };
-
-        totalCount = Transformations.map(Transformations.switchMap(shipNo, new Function<String, LiveData<Integer>>() {
+        totalCount = Transformations.switchMap(shipNo, new Function<String, LiveData<Integer>>() {
             @Override
             public LiveData<Integer> apply(String s) {
-                return Util.transform(detailDao.countByShiNo(s), compositeDisposable);
+                return detailDao.countByShiNo(s);
             }
-        }), int2StrFunc);
+        });
 
-        scannedCount = Transformations.map(Transformations.switchMap(shipNo, new Function<String, LiveData<Integer>>() {
+        scannedCount = Transformations.switchMap(shipNo, new Function<String, LiveData<Integer>>() {
             @Override
             public LiveData<Integer> apply(String s) {
-                return Util.transform(detailDao.countByShiNoAndStatus(s, 1), compositeDisposable);
+                return detailDao.countByShiNoAndStatus(s, 1);
             }
-        }), int2StrFunc);
+        });
 
-        notScannedCount = Transformations.map(Transformations.switchMap(shipNo, new Function<String, LiveData<Integer>>() {
+        notScannedCount = Transformations.switchMap(shipNo, new Function<String, LiveData<Integer>>() {
             @Override
             public LiveData<Integer> apply(String s) {
-                return Util.transform(detailDao.countByShiNoAndStatus(s, 0), compositeDisposable);
+                return detailDao.countByShiNoAndStatus(s, 0);
             }
-        }), int2StrFunc);
+        });
 
-        errorCount = Transformations.map(Transformations.switchMap(shipNo, new Function<String, LiveData<Integer>>() {
+        errorCount = Transformations.switchMap(shipNo, new Function<String, LiveData<Integer>>() {
             @Override
             public LiveData<Integer> apply(String s) {
-                return Util.transform(errorDao.countByShiNo(s), compositeDisposable);
+                return errorDao.countByShiNo(s);
             }
-        }), int2StrFunc);
+        });
+    }
+
+    public LiveData<String> getTotalCount() {
+        return Transformations.map(totalCount, int2StrFunc);
+    }
+
+    public LiveData<String> getScannedCount() {
+        return Transformations.map(scannedCount, int2StrFunc);
+    }
+
+    public LiveData<String> getNotScannedCount() {
+        return Transformations.map(notScannedCount, int2StrFunc);
+    }
+
+    public LiveData<String> getErrorCount() {
+        return Transformations.map(errorCount, int2StrFunc);
     }
 
     public void onSaveButtonClick() {
