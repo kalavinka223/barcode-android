@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,6 +29,19 @@ public class ImportFragment extends Fragment {
         binding.setViewModel(viewModel);
         View root = binding.getRoot();
         setHasOptionsMenu(true);
+
+        Spinner spinner = root.findViewById(R.id.ship_no_spinner);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                viewModel.getShipNoItemPosition().setValue(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         return root;
     }
