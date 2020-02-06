@@ -98,7 +98,8 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/not_scanned_count_view"
             app:layout_constraintTop_toTopOf="@+id/total_count_view"
-            app:subtitle="失败" />
+            app:subtitle="失败"
+            app:title="@{viewModel.errorCount}" />
 
         <Button
             android:id="@+id/view_detail_button"

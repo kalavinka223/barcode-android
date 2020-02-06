@@ -13,6 +13,7 @@ import com.powerdata.barcode.common.SingleLiveEvent;
 import com.powerdata.barcode.common.Util;
 import com.powerdata.barcode.model.BarcodeDetail;
 import com.powerdata.barcode.repository.BarcodeDetailDao;
+import com.powerdata.barcode.repository.BarcodeErrorDao;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -38,11 +39,13 @@ public class ImportViewModel extends ViewModel {
     public LiveData<String> totalCount;
     public LiveData<String> scannedCount;
     public LiveData<String> notScannedCount;
+    public LiveData<String> errorCount;
 
     private LiveData<String> shipNo;
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private BarcodeDetailDao detailDao = MyApplication.db.barcodeDetailDao();
+    private BarcodeErrorDao errorDao = MyApplication.db.barcodeErrorDao();
 
     public ImportViewModel() {
         shipNo = Transformations.map(shipNoItemPosition, new Function<Integer, String>() {
@@ -84,6 +87,13 @@ public class ImportViewModel extends ViewModel {
             @Override
             public LiveData<Integer> apply(String s) {
                 return Util.transform(detailDao.countByShiNoAndStatus(s, 0), compositeDisposable);
+            }
+        }), int2StrFunc);
+
+        errorCount = Transformations.map(Transformations.switchMap(shipNo, new Function<String, LiveData<Integer>>() {
+            @Override
+            public LiveData<Integer> apply(String s) {
+                return Util.transform(errorDao.countByShiNo(s), compositeDisposable);
             }
         }), int2StrFunc);
     }
