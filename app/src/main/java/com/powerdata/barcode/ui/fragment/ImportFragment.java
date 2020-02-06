@@ -12,23 +12,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.powerdata.barcode.R;
 import com.powerdata.barcode.databinding.FragmentImportBinding;
 import com.powerdata.barcode.viewModel.ImportViewModel;
 
 import java.io.IOException;
-
-import es.dmoral.toasty.Toasty;
 
 public class ImportFragment extends Fragment {
 
@@ -49,7 +45,7 @@ public class ImportFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                viewModel.shipNoItemPosition.setValue(position);
+                viewModel.setShipNoItemPosition(position);
             }
 
             @Override
@@ -58,57 +54,16 @@ public class ImportFragment extends Fragment {
             }
         });
 
-        viewModel.openDocumentAction
-                .observe(this, new Observer<Void>() {
-                    @Override
-                    public void onChanged(Void aVoid) {
-                        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                        intent.addCategory(Intent.CATEGORY_OPENABLE);
-                        intent.setType("*/*");
-                        startActivityForResult(intent, PICK_FILE);
-                    }
-                });
-
-        viewModel.didSave
-                .observe(this, new Observer<Void>() {
-                    @Override
-                    public void onChanged(Void aVoid) {
-                        String message = getString(R.string.message_save_successfully);
-                        Toasty.success(requireContext(), message, Toast.LENGTH_SHORT, true)
-                                .show();
-                    }
-                });
-
-        viewModel.didSaveError
-                .observe(this, new Observer<Void>() {
-                    @Override
-                    public void onChanged(Void aVoid) {
-                        String message = getString(R.string.message_save_error);
-                        Toasty.warning(requireContext(), message, Toast.LENGTH_SHORT, true)
-                                .show();
-                    }
-                });
-
-        viewModel.didImport
-                .observe(this, new Observer<Void>() {
-                    @Override
-                    public void onChanged(Void aVoid) {
-                        String message = getString(R.string.message_import_successfully);
-                        Toasty.success(requireContext(), message, Toast.LENGTH_SHORT, true)
-                                .show();
-                    }
-                });
-
-        viewModel.navigateDetails
-                .observe(this, new Observer<String>() {
-                    @Override
-                    public void onChanged(String s) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString(ARG_SHIP_NO, s);
-                        NavHostFragment.findNavController(ImportFragment.this)
-                                .navigate(R.id.navigation_detail_list, bundle);
-                    }
-                });
+        Button importButton = root.findViewById(R.id.import_csv_button);
+        importButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("*/*");
+                startActivityForResult(intent, PICK_FILE);
+            }
+        });
 
         return root;
     }
@@ -121,7 +76,7 @@ public class ImportFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.save_item) {
-            viewModel.onSaveButtonClick();
+            viewModel.save();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -133,14 +88,16 @@ public class ImportFragment extends Fragment {
             try {
                 Uri uri = data.getData();
                 assert uri != null;
-                ParcelFileDescriptor pfd = requireContext().getContentResolver().
-                        openFileDescriptor(uri, "r");
+                ParcelFileDescriptor pfd = requireContext().getContentResolver()
+                        .openFileDescriptor(uri, "r");
                 assert pfd != null;
-                viewModel.file.setValue(pfd.getFileDescriptor());
+                viewModel.importCSV(pfd.getFileDescriptor());
                 pfd.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
+
 }

@@ -3,13 +3,11 @@ package com.powerdata.barcode.viewModel;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.powerdata.barcode.MyApplication;
 import com.powerdata.barcode.common.Constant;
-import com.powerdata.barcode.common.SingleLiveEvent;
 import com.powerdata.barcode.common.Util;
 import com.powerdata.barcode.model.BarcodeDetail;
 import com.powerdata.barcode.model.BarcodeError;
@@ -41,38 +39,20 @@ public class ImportViewModel extends ViewModel {
             return String.valueOf(input);
         }
     };
-    public MutableLiveData<Integer> shipNoItemPosition = new MutableLiveData<>();
+
     public MutableLiveData<String> barcode = new MutableLiveData<>();
-    public SingleLiveEvent<Void> openDocumentAction = new SingleLiveEvent<>();
-    public MutableLiveData<FileDescriptor> file = new MutableLiveData<>();
-    public SingleLiveEvent<Void> didSave = new SingleLiveEvent<>();
-    public SingleLiveEvent<Void> didSaveError = new SingleLiveEvent<>();
-    public SingleLiveEvent<Void> didImport = new SingleLiveEvent<>();
-    public SingleLiveEvent<String> navigateDetails = new SingleLiveEvent<>();
+
     private LiveData<Integer> totalCount;
     private LiveData<Integer> scannedCount;
     private LiveData<Integer> notScannedCount;
     private LiveData<Integer> errorCount;
-    private LiveData<String> shipNo;
+    private MutableLiveData<String> shipNo = new MutableLiveData<>();
+
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private BarcodeDetailDao detailDao = MyApplication.db.barcodeDetailDao();
     private BarcodeErrorDao errorDao = MyApplication.db.barcodeErrorDao();
 
     public ImportViewModel() {
-        shipNo = Transformations.map(shipNoItemPosition, new Function<Integer, String>() {
-            @Override
-            public String apply(Integer input) {
-                return Constant.SHIP_NO_ARRAY[input];
-            }
-        });
-
-        file.observeForever(new Observer<FileDescriptor>() {
-            @Override
-            public void onChanged(FileDescriptor file) {
-                importCSV(file);
-            }
-        });
-
         totalCount = Transformations.switchMap(shipNo, new Function<String, LiveData<Integer>>() {
             @Override
             public LiveData<Integer> apply(String s) {
@@ -102,6 +82,10 @@ public class ImportViewModel extends ViewModel {
         });
     }
 
+    public void setShipNoItemPosition(int position) {
+        shipNo.setValue(Constant.SHIP_NO_ARRAY[position]);
+    }
+
     public LiveData<String> getTotalCount() {
         return Transformations.map(totalCount, int2StrFunc);
     }
@@ -116,21 +100,6 @@ public class ImportViewModel extends ViewModel {
 
     public LiveData<String> getErrorCount() {
         return Transformations.map(errorCount, int2StrFunc);
-    }
-
-    public void onSaveButtonClick() {
-        String code = barcode.getValue();
-        barcode.postValue("");
-        if (StringUtils.isNotEmpty(code))
-            updateStatus(code);
-    }
-
-    public void onImportButtonClick() {
-        openDocumentAction.call();
-    }
-
-    public void onViewDetailButtonClick() {
-        navigateDetails.postValue(shipNo.getValue());
     }
 
     private List<BarcodeDetail> build(Iterable<CSVRecord> records) {
@@ -150,7 +119,7 @@ public class ImportViewModel extends ViewModel {
         return list;
     }
 
-    private void importCSV(FileDescriptor file) {
+    public void importCSV(FileDescriptor file) {
         try {
             Reader in = new FileReader(file);
             Iterable<CSVRecord> records = CSVFormat.RFC4180.withHeader().parse(in);
@@ -159,7 +128,7 @@ public class ImportViewModel extends ViewModel {
                     .subscribe(new Action() {
                         @Override
                         public void run() {
-                            didImport.call();
+
                         }
                     });
             compositeDisposable.add(disposable);
@@ -168,21 +137,20 @@ public class ImportViewModel extends ViewModel {
         }
     }
 
-    private void updateStatus(final String barcode) {
-        Disposable disposable = detailDao.updateStatusByBarcode(barcode)
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer i) {
-                        if (i > 0) {
-                            didSave.call();
-                        } else {
-                            saveError(barcode);
-                            didSaveError.call();
+    public void save() {
+        final String s = barcode.getValue();
+        if (StringUtils.isNotEmpty(s)) {
+            Disposable disposable = detailDao.updateStatusByBarcode(s)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Consumer<Integer>() {
+                        @Override
+                        public void accept(Integer integer) {
+                            if (integer <= 0)
+                                saveError(s);
                         }
-                    }
-                });
-        compositeDisposable.add(disposable);
+                    });
+            compositeDisposable.add(disposable);
+        }
     }
 
     private void saveError(String barcode) {
