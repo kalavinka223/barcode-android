@@ -6,6 +6,8 @@
     <string name="text_import_file">导入文件</string>
     <string name="text_view_error">失败明细</string>
     <string name="text_view_detail">查看明细</string>
+    <string name="hint_barcode_edit">输入钢卷号</string>
+    <string name="title_save">保存</string>
     <string-array name="ship_no_array">
         <item>A</item>
         <item>B</item>
