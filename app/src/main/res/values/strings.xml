@@ -9,7 +9,7 @@
     <string name="text_view_detail">查看明细</string>
     <string name="hint_barcode_edit">输入钢卷号</string>
     <string name="title_save">保存</string>
-    <string name="message_save_successfully">保存成功</string>
+    <string name="message_save_success">保存成功</string>
     <string name="message_save_error">保存失败</string>
     <string name="message_import_successfully">导入成功</string>
     <string-array name="ship_no_array">

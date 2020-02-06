@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +27,9 @@ import com.powerdata.barcode.viewModel.ImportViewModel;
 
 import java.io.IOException;
 
-public class ImportFragment extends Fragment {
+import es.dmoral.toasty.Toasty;
+
+public class ImportFragment extends Fragment implements ImportViewModel.ImportViewModelListener {
 
     public static final String ARG_SHIP_NO = "arg_ship_no";
     private static final int PICK_FILE = 1;
@@ -37,6 +40,7 @@ public class ImportFragment extends Fragment {
         FragmentImportBinding binding = FragmentImportBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
         viewModel = ViewModelProviders.of(this).get(ImportViewModel.class);
+        viewModel.setListener(this);
         binding.setViewModel(viewModel);
         final View root = binding.getRoot();
         setHasOptionsMenu(true);
@@ -99,5 +103,24 @@ public class ImportFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onSaveSuccess() {
+        String message = getString(R.string.message_save_success);
+        Toasty.success(requireContext(), message, Toast.LENGTH_SHORT, true)
+                .show();
+    }
 
+    @Override
+    public void onSaveError() {
+        String message = getString(R.string.message_save_error);
+        Toasty.warning(requireContext(), message, Toast.LENGTH_SHORT, true)
+                .show();
+    }
+
+    @Override
+    public void onImportSuccess() {
+        String message = getString(R.string.message_import_successfully);
+        Toasty.success(requireContext(), message, Toast.LENGTH_SHORT, true)
+                .show();
+    }
 }

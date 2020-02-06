@@ -25,6 +25,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
@@ -39,9 +40,8 @@ public class ImportViewModel extends ViewModel {
             return String.valueOf(input);
         }
     };
-
     public MutableLiveData<String> barcode = new MutableLiveData<>();
-
+    private ImportViewModelListener listener;
     private LiveData<Integer> totalCount;
     private LiveData<Integer> scannedCount;
     private LiveData<Integer> notScannedCount;
@@ -80,6 +80,10 @@ public class ImportViewModel extends ViewModel {
                 return errorDao.countByShiNo(s);
             }
         });
+    }
+
+    public void setListener(ImportViewModelListener listener) {
+        this.listener = listener;
     }
 
     public void setShipNoItemPosition(int position) {
@@ -125,10 +129,12 @@ public class ImportViewModel extends ViewModel {
             Iterable<CSVRecord> records = CSVFormat.RFC4180.withHeader().parse(in);
             Disposable disposable = detailDao.inserts(build(records))
                     .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action() {
                         @Override
                         public void run() {
-
+                            if (listener != null)
+                                listener.onImportSuccess();
                         }
                     });
             compositeDisposable.add(disposable);
@@ -139,14 +145,20 @@ public class ImportViewModel extends ViewModel {
 
     public void save() {
         final String s = barcode.getValue();
+        barcode.setValue("");
         if (StringUtils.isNotEmpty(s)) {
             Disposable disposable = detailDao.updateStatusByBarcode(s)
                     .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<Integer>() {
                         @Override
                         public void accept(Integer integer) {
-                            if (integer <= 0)
+                            if (integer > 0 && listener != null)
+                                listener.onSaveSuccess();
+                            else if (listener != null) {
+                                listener.onSaveError();
                                 saveError(s);
+                            }
                         }
                     });
             compositeDisposable.add(disposable);
@@ -162,6 +174,14 @@ public class ImportViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .subscribe();
         compositeDisposable.add(disposable);
+    }
+
+    public interface ImportViewModelListener {
+        void onSaveSuccess();
+
+        void onSaveError();
+
+        void onImportSuccess();
     }
 
 }
