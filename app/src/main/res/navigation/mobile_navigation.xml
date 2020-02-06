@@ -3,23 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_import">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.powerdata.barcode.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_import"
+        android:name="com.powerdata.barcode.ui.fragment.ImportFragment"
+        android:label="@string/title_import"
+        tools:layout="@layout/fragment_import" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.powerdata.barcode.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_collection"
+        android:name="com.powerdata.barcode.ui.fragment.CollectionFragment"
+        android:label="@string/title_collection"
+        tools:layout="@layout/fragment_collection" />
 
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.powerdata.barcode.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
 </navigation>
