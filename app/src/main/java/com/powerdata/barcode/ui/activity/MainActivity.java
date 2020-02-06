@@ -1,4 +1,4 @@
-package com.powerdata.barcode;
+package com.powerdata.barcode.ui.activity;
 
 import android.os.Bundle;
 
@@ -9,6 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.powerdata.barcode.R;
 
 public class MainActivity extends AppCompatActivity {
 
