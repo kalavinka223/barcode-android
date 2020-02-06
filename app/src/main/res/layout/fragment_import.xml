@@ -59,7 +59,8 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/barcode_edit_text"
-            app:subtitle="总数" />
+            app:subtitle="总数"
+            app:title="@{viewModel.totalCount}" />
 
         <com.powerdata.barcode.ui.component.TitledCardView
             android:id="@+id/scanned_count_view"
@@ -71,7 +72,8 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/total_count_view"
             app:layout_constraintTop_toTopOf="@+id/total_count_view"
-            app:subtitle="已扫描" />
+            app:subtitle="已扫描"
+            app:title="@{viewModel.scannedCount}" />
 
         <com.powerdata.barcode.ui.component.TitledCardView
             android:id="@+id/not_scanned_count_view"
@@ -82,7 +84,8 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/scanned_count_view"
             app:layout_constraintTop_toTopOf="@+id/total_count_view"
-            app:subtitle="未扫描" />
+            app:subtitle="未扫描"
+            app:title="@{viewModel.notScannedCount}" />
 
         <com.powerdata.barcode.ui.component.TitledCardView
             android:id="@+id/error_count_view"
@@ -126,6 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_action_import_csv"
+            android:onClick="@{()->viewModel.onImportButtonClick()}"
             android:text="@string/text_import_file"
             app:layout_constraintBottom_toBottomOf="@+id/view_detail_button"
             app:layout_constraintEnd_toEndOf="parent"
