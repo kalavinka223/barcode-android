@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.powerdata.barcode.R;
 import com.powerdata.barcode.databinding.FragmentImportBinding;
@@ -66,6 +67,17 @@ public class ImportFragment extends Fragment implements ImportViewModel.ImportVi
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("*/*");
                 startActivityForResult(intent, PICK_FILE);
+            }
+        });
+
+        Button detailButton = root.findViewById(R.id.view_detail_button);
+        detailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString(ARG_SHIP_NO, viewModel.getShipNo().getValue());
+                NavHostFragment.findNavController(ImportFragment.this)
+                        .navigate(R.id.navigation_detail_list, bundle);
             }
         });
 

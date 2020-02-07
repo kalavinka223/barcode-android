@@ -49,7 +49,6 @@ public class ImportViewModel extends ViewModel {
     private LiveData<Integer> notScannedCount;
     private LiveData<Integer> errorCount;
     private MutableLiveData<String> shipNo = new MutableLiveData<>();
-
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private BarcodeDetailDao detailDao = MyApplication.db.barcodeDetailDao();
     private BarcodeErrorDao errorDao = MyApplication.db.barcodeErrorDao();
@@ -90,6 +89,10 @@ public class ImportViewModel extends ViewModel {
 
     public void setShipNoItemPosition(int position) {
         shipNo.setValue(Constant.SHIP_NO_ARRAY[position]);
+    }
+
+    public LiveData<String> getShipNo() {
+        return shipNo;
     }
 
     public LiveData<String> getTotalCount() {
