@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -20,6 +21,7 @@ import com.powerdata.barcode.ui.adapter.BarcodeDetailAdapter;
 import com.powerdata.barcode.viewModel.DetailListViewModel;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 明细页面
@@ -85,6 +87,8 @@ public class DetailListFragment extends Fragment {
 
         if (getArguments() != null) {
             String shipNo = getArguments().getString(ImportFragment.ARG_SHIP_NO);
+            Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar())
+                    .setTitle(getString(R.string.title_detail, shipNo));
             viewModel.loadDetails(shipNo);
         }
 

@@ -2,7 +2,7 @@
     <string name="app_name">Barcode</string>
     <string name="title_import">导入识别</string>
     <string name="title_collection">直接采集</string>
-    <string name="title_detail">明细</string>
+    <string name="title_detail">船%s明细</string>
     <string name="text_ship_no">船号</string>
     <string name="text_import_file">导入文件</string>
     <string name="text_view_error">失败明细</string>
