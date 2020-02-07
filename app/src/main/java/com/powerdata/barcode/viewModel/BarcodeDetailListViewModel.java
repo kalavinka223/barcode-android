@@ -30,7 +30,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 
-public class DetailListViewModel extends ViewModel {
+public class BarcodeDetailListViewModel extends ViewModel {
 
     private DetailListViewModelListener listener;
     private MutableLiveData<List<BarcodeDetail>> details = new MutableLiveData<>();
@@ -39,7 +39,7 @@ public class DetailListViewModel extends ViewModel {
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private BarcodeDetailDao detailDao = MyApplication.db.barcodeDetailDao();
 
-    public DetailListViewModel() {
+    public BarcodeDetailListViewModel() {
     }
 
     public void setStatus(Status status) {

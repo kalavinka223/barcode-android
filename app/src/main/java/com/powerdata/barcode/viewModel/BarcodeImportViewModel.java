@@ -32,7 +32,7 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class ImportViewModel extends ViewModel {
+public class BarcodeImportViewModel extends ViewModel {
 
     private final Function<Integer, String> int2Str = new Function<Integer, String>() {
         @Override
@@ -53,7 +53,7 @@ public class ImportViewModel extends ViewModel {
     private BarcodeDetailDao detailDao = MyApplication.db.barcodeDetailDao();
     private BarcodeErrorDao errorDao = MyApplication.db.barcodeErrorDao();
 
-    public ImportViewModel() {
+    public BarcodeImportViewModel() {
         totalCount = Transformations.switchMap(shipNo, new Function<String, LiveData<Integer>>() {
             @Override
             public LiveData<Integer> apply(String s) {

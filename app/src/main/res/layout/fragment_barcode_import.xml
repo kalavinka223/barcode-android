@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.powerdata.barcode.viewModel.ImportViewModel" />
+            type="com.powerdata.barcode.viewModel.BarcodeImportViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

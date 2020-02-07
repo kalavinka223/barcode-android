@@ -22,25 +22,25 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.powerdata.barcode.R;
-import com.powerdata.barcode.databinding.FragmentImportBinding;
-import com.powerdata.barcode.viewModel.ImportViewModel;
+import com.powerdata.barcode.databinding.FragmentBarcodeImportBinding;
+import com.powerdata.barcode.viewModel.BarcodeImportViewModel;
 
 import java.io.IOException;
 
 import es.dmoral.toasty.Toasty;
 
-public class ImportFragment extends Fragment implements ImportViewModel.ImportViewModelListener {
+public class BarcodeImportFragment extends Fragment implements BarcodeImportViewModel.ImportViewModelListener {
 
     static final String ARG_SHIP_NO = "arg_ship_no";
 
     private static final int PICK_FILE = 1;
-    private ImportViewModel viewModel;
+    private BarcodeImportViewModel viewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        FragmentImportBinding binding = FragmentImportBinding.inflate(inflater);
+        FragmentBarcodeImportBinding binding = FragmentBarcodeImportBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
-        viewModel = ViewModelProviders.of(this).get(ImportViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(BarcodeImportViewModel.class);
         viewModel.setListener(this);
         binding.setViewModel(viewModel);
         final View root = binding.getRoot();
@@ -76,8 +76,8 @@ public class ImportFragment extends Fragment implements ImportViewModel.ImportVi
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString(ARG_SHIP_NO, viewModel.getShipNo().getValue());
-                NavHostFragment.findNavController(ImportFragment.this)
-                        .navigate(R.id.navigation_detail_list, bundle);
+                NavHostFragment.findNavController(BarcodeImportFragment.this)
+                        .navigate(R.id.navigation_barcode_detail_list, bundle);
             }
         });
 

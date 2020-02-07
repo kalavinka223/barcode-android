@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         final BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_import, R.id.navigation_collection)
+                R.id.navigation_barcode_import, R.id.navigation_barcode_collection)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if (destination.getId() == R.id.navigation_import
-                        || destination.getId() == R.id.navigation_collection)
+                if (destination.getId() == R.id.navigation_barcode_import
+                        || destination.getId() == R.id.navigation_barcode_collection)
                     navView.setVisibility(View.VISIBLE);
                 else
                     navView.setVisibility(View.GONE);

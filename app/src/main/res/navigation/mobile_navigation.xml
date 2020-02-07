@@ -3,29 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_import">
+    app:startDestination="@+id/navigation_barcode_import">
 
     <fragment
-        android:id="@+id/navigation_import"
-        android:name="com.powerdata.barcode.ui.fragment.ImportFragment"
+        android:id="@+id/navigation_barcode_import"
+        android:name="com.powerdata.barcode.ui.fragment.BarcodeImportFragment"
         android:label="@string/title_import"
-        tools:layout="@layout/fragment_import">
+        tools:layout="@layout/fragment_barcode_import">
         <action
             android:id="@+id/action_navigation_import_to_detail_list_fragment"
-            app:destination="@id/navigation_detail_list" />
+            app:destination="@id/navigation_barcode_detail_list" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_collection"
-        android:name="com.powerdata.barcode.ui.fragment.CollectionFragment"
+        android:id="@+id/navigation_barcode_collection"
+        android:name="com.powerdata.barcode.ui.fragment.BarcodeCollectionFragment"
         android:label="@string/title_collection"
-        tools:layout="@layout/fragment_collection" />
+        tools:layout="@layout/fragment_barcode_collection" />
 
     <fragment
-        android:id="@+id/navigation_detail_list"
-        android:name="com.powerdata.barcode.ui.fragment.DetailListFragment"
+        android:id="@+id/navigation_barcode_detail_list"
+        android:name="com.powerdata.barcode.ui.fragment.BarcodeDetailListFragment"
         android:label="@string/title_detail"
-        tools:layout="@layout/fragment_detail_list">
+        tools:layout="@layout/fragment_barcode_detail_list">
         <argument
             android:name="shipNo"
             app:argType="string" />

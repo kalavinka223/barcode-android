@@ -15,18 +15,18 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.powerdata.barcode.R;
-import com.powerdata.barcode.databinding.FragmentCollectionBinding;
-import com.powerdata.barcode.viewModel.CollectionViewModel;
+import com.powerdata.barcode.databinding.FragmentBarcodeCollectionBinding;
+import com.powerdata.barcode.viewModel.BarcodeCollectionViewModel;
 
-public class CollectionFragment extends Fragment {
+public class BarcodeCollectionFragment extends Fragment {
 
-    private CollectionViewModel viewModel;
+    private BarcodeCollectionViewModel viewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        FragmentCollectionBinding binding = FragmentCollectionBinding.inflate(inflater);
+        FragmentBarcodeCollectionBinding binding = FragmentBarcodeCollectionBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
-        viewModel = ViewModelProviders.of(this).get(CollectionViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(BarcodeCollectionViewModel.class);
         binding.setViewModel(viewModel);
         final View root = binding.getRoot();
         setHasOptionsMenu(true);

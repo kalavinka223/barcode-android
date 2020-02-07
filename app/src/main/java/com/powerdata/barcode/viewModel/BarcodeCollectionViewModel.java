@@ -16,7 +16,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 
-public class CollectionViewModel extends ViewModel {
+public class BarcodeCollectionViewModel extends ViewModel {
 
     public MutableLiveData<String> barcode = new MutableLiveData<>();
     private String shipNo = Constant.SHIP_NO_ARRAY[0];

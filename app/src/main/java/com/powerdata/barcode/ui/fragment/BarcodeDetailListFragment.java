@@ -22,10 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.powerdata.barcode.R;
-import com.powerdata.barcode.databinding.FragmentDetailListBinding;
+import com.powerdata.barcode.databinding.FragmentBarcodeDetailListBinding;
 import com.powerdata.barcode.model.BarcodeDetail;
 import com.powerdata.barcode.ui.adapter.BarcodeDetailAdapter;
-import com.powerdata.barcode.viewModel.DetailListViewModel;
+import com.powerdata.barcode.viewModel.BarcodeDetailListViewModel;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,25 +36,25 @@ import es.dmoral.toasty.Toasty;
 /**
  * 明细页面
  */
-public class DetailListFragment extends Fragment implements DetailListViewModel.DetailListViewModelListener {
+public class BarcodeDetailListFragment extends Fragment implements BarcodeDetailListViewModel.DetailListViewModelListener {
 
     private static final int CREATE_FILE = 1;
 
-    private DetailListViewModel viewModel;
+    private BarcodeDetailListViewModel viewModel;
     private String shipNo;
 
-    public DetailListFragment() {
+    public BarcodeDetailListFragment() {
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         assert getArguments() != null;
-        shipNo = getArguments().getString(ImportFragment.ARG_SHIP_NO);
+        shipNo = getArguments().getString(BarcodeImportFragment.ARG_SHIP_NO);
 
-        FragmentDetailListBinding binding = FragmentDetailListBinding.inflate(inflater);
+        FragmentBarcodeDetailListBinding binding = FragmentBarcodeDetailListBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
-        viewModel = ViewModelProviders.of(this).get(DetailListViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(BarcodeDetailListViewModel.class);
         viewModel.setListener(this);
         binding.setViewModel(viewModel);
 
@@ -72,16 +72,16 @@ public class DetailListFragment extends Fragment implements DetailListViewModel.
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                DetailListViewModel.Status status = DetailListViewModel.Status.ALL;
+                BarcodeDetailListViewModel.Status status = BarcodeDetailListViewModel.Status.ALL;
                 switch (tab.getPosition()) {
                     case 0:
-                        status = DetailListViewModel.Status.ALL;
+                        status = BarcodeDetailListViewModel.Status.ALL;
                         break;
                     case 1:
-                        status = DetailListViewModel.Status.SCANNED;
+                        status = BarcodeDetailListViewModel.Status.SCANNED;
                         break;
                     case 2:
-                        status = DetailListViewModel.Status.NOT_SCANNED;
+                        status = BarcodeDetailListViewModel.Status.NOT_SCANNED;
                         break;
                 }
                 viewModel.setStatus(status);
