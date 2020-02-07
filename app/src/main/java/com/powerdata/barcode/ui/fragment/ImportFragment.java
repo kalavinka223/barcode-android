@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -118,22 +117,16 @@ public class ImportFragment extends Fragment implements ImportViewModel.ImportVi
 
     @Override
     public void onSaveSuccess() {
-        String message = getString(R.string.message_save_success);
-        Toasty.success(requireContext(), message, Toast.LENGTH_SHORT, true)
-                .show();
+        Toasty.success(requireContext(), R.string.message_save_success).show();
     }
 
     @Override
     public void onSaveError() {
-        String message = getString(R.string.message_save_error);
-        Toasty.warning(requireContext(), message, Toast.LENGTH_SHORT, true)
-                .show();
+        Toasty.warning(requireContext(), R.string.message_save_error).show();
     }
 
     @Override
     public void onImportSuccess() {
-        String message = getString(R.string.message_import_successfully);
-        Toasty.success(requireContext(), message, Toast.LENGTH_SHORT, true)
-                .show();
+        Toasty.success(requireContext(), R.string.message_import_success).show();
     }
 }
