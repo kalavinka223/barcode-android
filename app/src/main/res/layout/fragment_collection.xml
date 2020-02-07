@@ -17,7 +17,7 @@
         tools:context=".ui.fragment.BarcodeCollectionFragment">
 
         <TextView
-            android:id="@+id/ship_number_text_view"
+            android:id="@+id/ship_no_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_ship_no"
@@ -25,14 +25,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
-            android:id="@+id/ship_number_spinner"
+            android:id="@+id/ship_no_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:entries="@array/ship_no_array"
-            app:layout_constraintBottom_toBottomOf="@+id/ship_number_text_view"
-            app:layout_constraintStart_toEndOf="@+id/ship_number_text_view"
-            app:layout_constraintTop_toTopOf="@+id/ship_number_text_view" />
+            app:layout_constraintBottom_toBottomOf="@+id/ship_no_text_view"
+            app:layout_constraintStart_toEndOf="@+id/ship_no_text_view"
+            app:layout_constraintTop_toTopOf="@+id/ship_no_text_view" />
 
         <EditText
             android:id="@+id/barcode_edit_text"
@@ -43,12 +43,13 @@
             android:hint="@string/hint_barcode_edit"
             android:importantForAutofill="no"
             android:inputType="text"
+            android:text="@={viewModel.barcode}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ship_number_text_view" />
+            app:layout_constraintTop_toBottomOf="@+id/ship_no_text_view" />
 
         <Button
-            android:id="@+id/detail_button"
+            android:id="@+id/view_detail_button"
             style="@style/AppTheme.Button.Image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
