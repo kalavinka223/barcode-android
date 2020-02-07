@@ -81,7 +81,7 @@ public class BarcodeListFragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("text/csv");
-                intent.putExtra(Intent.EXTRA_TITLE, "船" + shipNo + "明细.csv");
+                intent.putExtra(Intent.EXTRA_TITLE, "船" + shipNo + "直接采集.csv");
                 startActivityForResult(intent, CREATE_FILE);
             }
         });

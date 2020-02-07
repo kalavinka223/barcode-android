@@ -9,7 +9,14 @@ import com.powerdata.barcode.MyApplication;
 import com.powerdata.barcode.model.BarcodeInfo;
 import com.powerdata.barcode.repository.BarcodeInfoDao;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+
 import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -55,7 +62,23 @@ public class BarcodeListViewModel extends ViewModel {
     }
 
     public void export(FileDescriptor file) {
-
+        try {
+            List<BarcodeInfo> list = barcodeInfos.getValue();
+            if (list != null) {
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                OutputStreamWriter writer = new OutputStreamWriter(fileOutputStream, "GBK");
+                Appendable printWriter = new PrintWriter(writer);
+                CSVPrinter csvPrinter = CSVFormat.EXCEL.withHeader("钢卷号", "扫描时间", "船号").print(printWriter);
+                for (int i = 0; i < list.size(); i++) {
+                    BarcodeInfo barcodeInfo = list.get(i);
+                    csvPrinter.printRecord(barcodeInfo.barcode, barcodeInfo.createdAt, barcodeInfo.shipNo);
+                }
+                csvPrinter.flush();
+                csvPrinter.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
