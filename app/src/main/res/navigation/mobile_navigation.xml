@@ -13,19 +13,30 @@
         <action
             android:id="@+id/action_barcode_import_to_barcode_detail_list_fragment"
             app:destination="@id/navigation_barcode_detail_list" />
+        <action
+            android:id="@+id/action_navigation_barcode_import_to_barcode_error_list_fragment"
+            app:destination="@id/navigation_barcode_error_list" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_barcode_collection"
         android:name="com.powerdata.barcode.ui.fragment.BarcodeCollectionFragment"
         android:label="@string/title_collection"
-        tools:layout="@layout/fragment_barcode_collection"/>
+        tools:layout="@layout/fragment_barcode_collection" />
 
     <fragment
         android:id="@+id/navigation_barcode_detail_list"
         android:name="com.powerdata.barcode.ui.fragment.BarcodeDetailListFragment"
-        android:label="@string/title_detail"
         tools:layout="@layout/fragment_barcode_detail_list">
+        <argument
+            android:name="shipNo"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_barcode_error_list"
+        android:name="com.powerdata.barcode.ui.fragment.BarcodeErrorListFragment"
+        tools:layout="@layout/fragment_barcode_error_list">
         <argument
             android:name="shipNo"
             app:argType="string" />

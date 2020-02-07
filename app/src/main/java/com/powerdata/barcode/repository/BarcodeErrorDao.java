@@ -19,7 +19,7 @@ public interface BarcodeErrorDao {
     Completable insert(BarcodeError error);
 
     @Query("select * from barcode_error where ship_no = :shipNo order by created_at desc")
-    Flowable<List<BarcodeError>> listByShipNo(String shipNo);
+    LiveData<List<BarcodeError>> listByShipNo(String shipNo);
 
     @Query("select count(*) from barcode_error where ship_no = :shipNo")
     LiveData<Integer> countByShiNo(String shipNo);

@@ -126,7 +126,7 @@ public class BarcodeDetailListFragment extends Fragment implements BarcodeDetail
                     }
                 });
 
-        viewModel.loadDetails(shipNo);
+        viewModel.load(shipNo);
 
         return root;
     }

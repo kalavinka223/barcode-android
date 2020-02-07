@@ -61,7 +61,7 @@ public class BarcodeDetailListViewModel extends ViewModel {
         return details;
     }
 
-    public void loadDetails(String shipNo) {
+    public void load(String shipNo) {
         this.shipNo = shipNo;
         detailDao.listByShipNo(shipNo)
                 .observeForever(new Observer<List<BarcodeDetail>>() {

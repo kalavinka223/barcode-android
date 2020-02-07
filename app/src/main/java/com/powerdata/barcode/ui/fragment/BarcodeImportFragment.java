@@ -81,6 +81,17 @@ public class BarcodeImportFragment extends Fragment implements BarcodeImportView
             }
         });
 
+        Button errorButton = root.findViewById(R.id.view_error_button);
+        errorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString(ARG_SHIP_NO, viewModel.getShipNo().getValue());
+                NavHostFragment.findNavController(BarcodeImportFragment.this)
+                        .navigate(R.id.navigation_barcode_error_list, bundle);
+            }
+        });
+
         return root;
     }
 
