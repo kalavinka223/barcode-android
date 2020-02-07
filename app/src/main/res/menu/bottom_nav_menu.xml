@@ -4,11 +4,11 @@
     <item
         android:id="@+id/navigation_barcode_import"
         android:icon="@drawable/ic_action_import_csv"
-        android:title="@string/title_collection" />
+        android:title="@string/title_import" />
 
     <item
         android:id="@+id/navigation_barcode_collection"
         android:icon="@drawable/ic_action_barcode"
-        android:title="@string/title_import" />
+        android:title="@string/title_collection" />
 
 </menu>

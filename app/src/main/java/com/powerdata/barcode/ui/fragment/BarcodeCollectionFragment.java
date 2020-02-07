@@ -8,17 +8,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.powerdata.barcode.R;
 import com.powerdata.barcode.databinding.FragmentBarcodeCollectionBinding;
 import com.powerdata.barcode.viewModel.BarcodeCollectionViewModel;
 
 public class BarcodeCollectionFragment extends Fragment {
+
+    static final String ARG_SHIP_NO = "arg_ship_no";
 
     private BarcodeCollectionViewModel viewModel;
 
@@ -41,6 +45,17 @@ public class BarcodeCollectionFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        Button detailButton = root.findViewById(R.id.view_detail_button);
+        detailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString(ARG_SHIP_NO, viewModel.getShipNo());
+                NavHostFragment.findNavController(BarcodeCollectionFragment.this)
+                        .navigate(R.id.navigation_barcode_list, bundle);
             }
         });
 

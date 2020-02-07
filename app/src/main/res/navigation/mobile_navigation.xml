@@ -11,7 +11,7 @@
         android:label="@string/title_import"
         tools:layout="@layout/fragment_barcode_import">
         <action
-            android:id="@+id/action_navigation_import_to_detail_list_fragment"
+            android:id="@+id/action_barcode_import_to_barcode_detail_list_fragment"
             app:destination="@id/navigation_barcode_detail_list" />
     </fragment>
 
@@ -19,7 +19,11 @@
         android:id="@+id/navigation_barcode_collection"
         android:name="com.powerdata.barcode.ui.fragment.BarcodeCollectionFragment"
         android:label="@string/title_collection"
-        tools:layout="@layout/fragment_barcode_collection" />
+        tools:layout="@layout/fragment_barcode_collection">
+        <action
+            android:id="@+id/action_barcode_collection_to_barcode_List_fragment"
+            app:destination="@id/navigation_barcode_list" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_barcode_detail_list"
@@ -30,5 +34,11 @@
             android:name="shipNo"
             app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_barcode_list"
+        android:name="com.powerdata.barcode.ui.fragment.BarcodeListFragment"
+        android:label="@string/title_detail"
+        tools:layout="@layout/fragment_barcode_list" />
 
 </navigation>

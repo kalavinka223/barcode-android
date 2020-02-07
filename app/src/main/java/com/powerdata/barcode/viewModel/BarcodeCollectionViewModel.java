@@ -28,6 +28,10 @@ public class BarcodeCollectionViewModel extends ViewModel {
         shipNo = Constant.SHIP_NO_ARRAY[position];
     }
 
+    public String getShipNo() {
+        return shipNo;
+    }
+
     public void save() {
         String code = barcode.getValue();
         barcode.setValue("");
