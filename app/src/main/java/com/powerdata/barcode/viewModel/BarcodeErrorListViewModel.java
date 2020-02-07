@@ -32,11 +32,16 @@ public class BarcodeErrorListViewModel extends ViewModel {
 
     private MutableLiveData<List<BarcodeError>> errors = new MutableLiveData<>();
     private String shipNo;
+    private Listener listener;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private BarcodeErrorDao errorDao = MyApplication.db.barcodeErrorDao();
 
     public LiveData<List<BarcodeError>> getErrors() {
         return errors;
+    }
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
     }
 
     public void load(String shipNo) {
@@ -57,7 +62,8 @@ public class BarcodeErrorListViewModel extends ViewModel {
                 .subscribe(new Action() {
                     @Override
                     public void run() {
-
+                        if (listener != null)
+                            listener.onDeleteSuccess();
                     }
                 });
         compositeDisposable.add(disposable);
@@ -93,12 +99,18 @@ public class BarcodeErrorListViewModel extends ViewModel {
         thread.start();
 
         try {
-            if (task.get() ) {
-                //listener.onExportSuccess();
+            if (task.get() && listener != null) {
+                listener.onExportSuccess();
             }
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public interface Listener {
+        void onDeleteSuccess();
+
+        void onExportSuccess();
     }
 
 }

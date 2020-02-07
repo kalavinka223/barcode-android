@@ -29,10 +29,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
+
 /**
  * 失败明细页面
  */
-public class BarcodeErrorListFragment extends Fragment {
+public class BarcodeErrorListFragment extends Fragment implements BarcodeErrorListViewModel.Listener {
 
     private static final int CREATE_FILE = 1;
 
@@ -51,7 +53,7 @@ public class BarcodeErrorListFragment extends Fragment {
         FragmentBarcodeErrorListBinding binding = FragmentBarcodeErrorListBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
         viewModel = ViewModelProviders.of(this).get(BarcodeErrorListViewModel.class);
-        //viewModel.setListener(this);
+        viewModel.setListener(this);
         binding.setViewModel(viewModel);
 
         final View root = binding.getRoot();
@@ -132,4 +134,13 @@ public class BarcodeErrorListFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onDeleteSuccess() {
+        Toasty.success(requireContext(), R.string.message_delete_success).show();
+    }
+
+    @Override
+    public void onExportSuccess() {
+        Toasty.success(requireContext(), R.string.message_export_success).show();
+    }
 }
