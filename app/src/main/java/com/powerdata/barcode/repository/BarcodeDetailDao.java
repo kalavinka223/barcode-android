@@ -11,7 +11,6 @@ import com.powerdata.barcode.model.BarcodeDetail;
 import java.util.List;
 
 import io.reactivex.Completable;
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 @Dao
@@ -20,7 +19,7 @@ public interface BarcodeDetailDao {
     Completable inserts(List<BarcodeDetail> barcodeDetails);
 
     @Query("select * from barcode_detail where ship_no = :shipNo")
-    Flowable<List<BarcodeDetail>> listByShipNo(String shipNo);
+    LiveData<List<BarcodeDetail>> listByShipNo(String shipNo);
 
     @Query("update barcode_detail set status = 1, updated_at = strftime('%Y-%m-%d %H:%M:%S', 'now','localtime')  where barcode = :barcode")
     Single<Integer> updateStatusByBarcode(String barcode);

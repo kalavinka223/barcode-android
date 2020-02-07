@@ -32,7 +32,8 @@ import es.dmoral.toasty.Toasty;
 
 public class ImportFragment extends Fragment implements ImportViewModel.ImportViewModelListener {
 
-    public static final String ARG_SHIP_NO = "arg_ship_no";
+    static final String ARG_SHIP_NO = "arg_ship_no";
+
     private static final int PICK_FILE = 1;
     private ImportViewModel viewModel;
 

@@ -24,4 +24,6 @@
     <string name="text_export">导出</string>
     <string name="text_delete">删除</string>
     <string name="text_status">状态</string>
+    <string name="text_not_scanned">未扫描</string>
+    <string name="text_scanned">已扫描</string>
 </resources>
