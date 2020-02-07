@@ -12,6 +12,7 @@
     <string name="message_save_success">保存成功</string>
     <string name="message_save_error">保存失败</string>
     <string name="message_import_successfully">导入成功</string>
+    <string name="message_delete_alert">确认删除所有数据吗？</string>
     <string-array name="ship_no_array">
         <item>A</item>
         <item>B</item>
@@ -26,4 +27,6 @@
     <string name="text_status">状态</string>
     <string name="text_not_scanned">未扫描</string>
     <string name="text_scanned">已扫描</string>
+    <string name="text_ok">确定</string>
+    <string name="text_cancel">取消</string>
 </resources>

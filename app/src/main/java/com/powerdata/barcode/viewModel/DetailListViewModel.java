@@ -13,10 +13,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.schedulers.Schedulers;
+
 public class DetailListViewModel extends ViewModel {
     private MutableLiveData<List<BarcodeDetail>> details = new MutableLiveData<>();
     private String shipNo;
     private List<BarcodeDetail> allDetails = Collections.emptyList();
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private BarcodeDetailDao detailDao = MyApplication.db.barcodeDetailDao();
 
     public DetailListViewModel() {
@@ -50,6 +56,18 @@ public class DetailListViewModel extends ViewModel {
                         details.setValue(allDetails);
                     }
                 });
+    }
+
+    public void delete() {
+        Disposable disposable = detailDao.deleteByShipNo(shipNo)
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Action() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+        compositeDisposable.add(disposable);
     }
 
     private List<BarcodeDetail> filter(int status) {

@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -29,6 +31,7 @@ import java.util.Objects;
 public class DetailListFragment extends Fragment {
 
     private DetailListViewModel viewModel;
+    private AlertDialogFragment deleteAlertDialog;
 
     public DetailListFragment() {
     }
@@ -77,6 +80,14 @@ public class DetailListFragment extends Fragment {
             }
         });
 
+        Button deleteButton = root.findViewById(R.id.delete_button);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDeleteAlertDialog();
+            }
+        });
+
         viewModel.getDetails()
                 .observe(getViewLifecycleOwner(), new Observer<List<BarcodeDetail>>() {
                     @Override
@@ -93,6 +104,25 @@ public class DetailListFragment extends Fragment {
         }
 
         return root;
+    }
+
+    private void showDeleteAlertDialog() {
+        if (deleteAlertDialog == null)
+            deleteAlertDialog = new AlertDialogFragment();
+        deleteAlertDialog.setTitle(getString(R.string.text_delete));
+        deleteAlertDialog.setMessage(getString(R.string.message_delete_alert));
+        deleteAlertDialog.show(requireFragmentManager(), "delete_alert_dialog");
+        deleteAlertDialog.setListener(new AlertDialogFragment.AlertDialogListener() {
+            @Override
+            public void onDialogPositiveClick(DialogFragment dialog) {
+                viewModel.delete();
+            }
+
+            @Override
+            public void onDialogNegativeClick(DialogFragment dialog) {
+
+            }
+        });
     }
 
 }
