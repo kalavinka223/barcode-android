@@ -1,6 +1,8 @@
 package com.powerdata.barcode.viewModel;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.powerdata.barcode.MyApplication;
@@ -11,6 +13,8 @@ import com.powerdata.barcode.repository.BarcodeInfoDao;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
@@ -19,6 +23,7 @@ import io.reactivex.schedulers.Schedulers;
 public class BarcodeCollectionViewModel extends ViewModel {
 
     public MutableLiveData<String> barcode = new MutableLiveData<>();
+    private MutableLiveData<List<BarcodeInfo>> barcodeInfos = new MutableLiveData<>();
     private String shipNo = Constant.SHIP_NO_ARRAY[0];
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -26,10 +31,21 @@ public class BarcodeCollectionViewModel extends ViewModel {
 
     public void setShipNoItemPosition(int position) {
         shipNo = Constant.SHIP_NO_ARRAY[position];
+        infoDao.listByShipNo(shipNo)
+                .observeForever(new Observer<List<BarcodeInfo>>() {
+                    @Override
+                    public void onChanged(List<BarcodeInfo> list) {
+                        barcodeInfos.setValue(list);
+                    }
+                });
     }
 
     public String getShipNo() {
         return shipNo;
+    }
+
+    public LiveData<List<BarcodeInfo>> getBarcodeInfos() {
+        return barcodeInfos;
     }
 
     public void save() {

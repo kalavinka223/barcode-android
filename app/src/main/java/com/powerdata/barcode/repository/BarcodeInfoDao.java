@@ -17,7 +17,7 @@ public interface BarcodeInfoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insert(BarcodeInfo barcodeInfo);
 
-    @Query("select * from barcode_info where ship_no = :shipNo")
+    @Query("select * from barcode_info where ship_no = :shipNo order by created_at desc")
     LiveData<List<BarcodeInfo>> listByShipNo(String shipNo);
 
     @Query("delete from barcode_info where ship_no = :shipNo")

@@ -13,12 +13,19 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.powerdata.barcode.R;
 import com.powerdata.barcode.databinding.FragmentBarcodeCollectionBinding;
+import com.powerdata.barcode.model.BarcodeInfo;
+import com.powerdata.barcode.ui.adapter.BarcodeAdapter;
 import com.powerdata.barcode.viewModel.BarcodeCollectionViewModel;
+
+import java.util.List;
 
 public class BarcodeCollectionFragment extends Fragment {
 
@@ -48,16 +55,17 @@ public class BarcodeCollectionFragment extends Fragment {
             }
         });
 
-        Button detailButton = root.findViewById(R.id.view_detail_button);
-        detailButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString(ARG_SHIP_NO, viewModel.getShipNo());
-                NavHostFragment.findNavController(BarcodeCollectionFragment.this)
-                        .navigate(R.id.navigation_barcode_list, bundle);
-            }
-        });
+        final RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        viewModel.getBarcodeInfos()
+                .observe(this, new Observer<List<BarcodeInfo>>() {
+                    @Override
+                    public void onChanged(List<BarcodeInfo> list) {
+                        recyclerView.setAdapter(new BarcodeAdapter(list));
+                    }
+                });
 
         return root;
     }
