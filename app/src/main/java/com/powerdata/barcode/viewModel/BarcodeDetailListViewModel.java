@@ -39,9 +39,6 @@ public class BarcodeDetailListViewModel extends ViewModel {
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private BarcodeDetailDao detailDao = MyApplication.db.barcodeDetailDao();
 
-    public BarcodeDetailListViewModel() {
-    }
-
     public void setStatus(Status status) {
         switch (status) {
             case ALL:

@@ -119,7 +119,7 @@ public class BarcodeDetailListFragment extends Fragment implements BarcodeDetail
         });
 
         viewModel.getDetails()
-                .observe(getViewLifecycleOwner(), new Observer<List<BarcodeDetail>>() {
+                .observe(this, new Observer<List<BarcodeDetail>>() {
                     @Override
                     public void onChanged(List<BarcodeDetail> list) {
                         recyclerView.setAdapter(new BarcodeDetailAdapter(list));
