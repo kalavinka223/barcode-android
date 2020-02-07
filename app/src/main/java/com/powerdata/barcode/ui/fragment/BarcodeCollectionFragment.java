@@ -33,7 +33,9 @@ import com.powerdata.barcode.viewModel.BarcodeCollectionViewModel;
 import java.io.IOException;
 import java.util.List;
 
-public class BarcodeCollectionFragment extends Fragment {
+import es.dmoral.toasty.Toasty;
+
+public class BarcodeCollectionFragment extends Fragment implements BarcodeCollectionViewModel.Listener {
 
     private static final int CREATE_FILE = 1;
 
@@ -44,6 +46,7 @@ public class BarcodeCollectionFragment extends Fragment {
         FragmentBarcodeCollectionBinding binding = FragmentBarcodeCollectionBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
         viewModel = ViewModelProviders.of(this).get(BarcodeCollectionViewModel.class);
+        viewModel.setListener(this);
         binding.setViewModel(viewModel);
         final View root = binding.getRoot();
         setHasOptionsMenu(true);
@@ -145,4 +148,13 @@ public class BarcodeCollectionFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onSaveSuccess() {
+        Toasty.success(requireContext(), R.string.message_save_success).show();
+    }
+
+    @Override
+    public void onExportSuccess() {
+        Toasty.success(requireContext(), R.string.message_export_success).show();
+    }
 }

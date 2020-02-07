@@ -22,6 +22,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -32,8 +35,10 @@ import io.reactivex.schedulers.Schedulers;
 public class BarcodeCollectionViewModel extends ViewModel {
 
     public MutableLiveData<String> barcode = new MutableLiveData<>();
+
     private LiveData<List<BarcodeInfo>> barcodeInfos;
     private MutableLiveData<String> shipNo = new MutableLiveData<>();
+    private Listener listener;
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private BarcodeInfoDao infoDao = MyApplication.db.barcodeInfoDao();
@@ -45,6 +50,10 @@ public class BarcodeCollectionViewModel extends ViewModel {
                 return infoDao.listByShipNo(s);
             }
         });
+    }
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
     }
 
     public void setShipNoItemPosition(int position) {
@@ -69,10 +78,12 @@ public class BarcodeCollectionViewModel extends ViewModel {
             info.createdAt = Util.formatDate(System.currentTimeMillis());
             Disposable disposable = infoDao.insert(info)
                     .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action() {
                         @Override
                         public void run() {
-                            System.out.println("insert ok");
+                            if (listener != null)
+                                listener.onSaveSuccess();
                         }
                     });
             compositeDisposable.add(disposable);
@@ -92,24 +103,48 @@ public class BarcodeCollectionViewModel extends ViewModel {
         compositeDisposable.add(disposable);
     }
 
-    public void export(FileDescriptor file) {
-        try {
-            List<BarcodeInfo> list = barcodeInfos.getValue();
-            if (list != null) {
-                FileOutputStream fileOutputStream = new FileOutputStream(file);
-                OutputStreamWriter writer = new OutputStreamWriter(fileOutputStream, "GBK");
-                Appendable printWriter = new PrintWriter(writer);
-                CSVPrinter csvPrinter = CSVFormat.EXCEL.withHeader("钢卷号", "扫描时间", "船号").print(printWriter);
-                for (int i = 0; i < list.size(); i++) {
-                    BarcodeInfo barcodeInfo = list.get(i);
-                    csvPrinter.printRecord(barcodeInfo.barcode, barcodeInfo.createdAt, barcodeInfo.shipNo);
+    public void export(final FileDescriptor file) {
+        if (barcodeInfos.getValue() == null)
+            return;
+
+        FutureTask<Boolean> task = new FutureTask<>(new Callable<Boolean>() {
+            @Override
+            public Boolean call() {
+                try {
+                    List<BarcodeInfo> list = barcodeInfos.getValue();
+                    FileOutputStream fileOutputStream = new FileOutputStream(file);
+                    OutputStreamWriter writer = new OutputStreamWriter(fileOutputStream, "GBK");
+                    Appendable printWriter = new PrintWriter(writer);
+                    CSVPrinter csvPrinter = CSVFormat.EXCEL.withHeader("钢卷号", "扫描时间", "船号").print(printWriter);
+                    for (int i = 0; i < list.size(); i++) {
+                        BarcodeInfo barcodeInfo = list.get(i);
+                        csvPrinter.printRecord(barcodeInfo.barcode, barcodeInfo.createdAt, barcodeInfo.shipNo);
+                    }
+                    csvPrinter.flush();
+                    csvPrinter.close();
+                    return true;
+                } catch (IOException e) {
+                    return false;
                 }
-                csvPrinter.flush();
-                csvPrinter.close();
             }
-        } catch (IOException e) {
+        });
+
+        Thread thread = new Thread(task);
+        thread.start();
+
+        try {
+            if (task.get() && listener != null) {
+                listener.onExportSuccess();
+            }
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public interface Listener {
+        void onSaveSuccess();
+
+        void onExportSuccess();
     }
 
 }

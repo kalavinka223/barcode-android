@@ -32,7 +32,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BarcodeDetailListViewModel extends ViewModel {
 
-    private DetailListViewModelListener listener;
+    private Listener listener;
     private MutableLiveData<List<BarcodeDetail>> details = new MutableLiveData<>();
     private String shipNo;
     private List<BarcodeDetail> allDetails = Collections.emptyList();
@@ -53,7 +53,7 @@ public class BarcodeDetailListViewModel extends ViewModel {
         }
     }
 
-    public void setListener(DetailListViewModelListener listener) {
+    public void setListener(Listener listener) {
         this.listener = listener;
     }
 
@@ -139,7 +139,7 @@ public class BarcodeDetailListViewModel extends ViewModel {
         ALL, SCANNED, NOT_SCANNED
     }
 
-    public interface DetailListViewModelListener {
+    public interface Listener {
         void onDeleteSuccess();
 
         void onExportSuccess();

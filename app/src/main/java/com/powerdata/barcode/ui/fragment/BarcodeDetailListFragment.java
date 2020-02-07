@@ -36,7 +36,7 @@ import es.dmoral.toasty.Toasty;
 /**
  * 明细页面
  */
-public class BarcodeDetailListFragment extends Fragment implements BarcodeDetailListViewModel.DetailListViewModelListener {
+public class BarcodeDetailListFragment extends Fragment implements BarcodeDetailListViewModel.Listener {
 
     private static final int CREATE_FILE = 1;
 

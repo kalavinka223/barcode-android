@@ -43,7 +43,7 @@ public class BarcodeImportViewModel extends ViewModel {
 
     public MutableLiveData<String> barcode = new MutableLiveData<>();
 
-    private ImportViewModelListener listener;
+    private Listener listener;
     private LiveData<Integer> totalCount;
     private LiveData<Integer> scannedCount;
     private LiveData<Integer> notScannedCount;
@@ -83,7 +83,7 @@ public class BarcodeImportViewModel extends ViewModel {
         });
     }
 
-    public void setListener(ImportViewModelListener listener) {
+    public void setListener(Listener listener) {
         this.listener = listener;
     }
 
@@ -181,7 +181,7 @@ public class BarcodeImportViewModel extends ViewModel {
         compositeDisposable.add(disposable);
     }
 
-    public interface ImportViewModelListener {
+    public interface Listener {
         void onSaveSuccess();
 
         void onSaveError();

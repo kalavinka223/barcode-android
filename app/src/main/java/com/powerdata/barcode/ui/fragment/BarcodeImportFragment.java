@@ -29,7 +29,7 @@ import java.io.IOException;
 
 import es.dmoral.toasty.Toasty;
 
-public class BarcodeImportFragment extends Fragment implements BarcodeImportViewModel.ImportViewModelListener {
+public class BarcodeImportFragment extends Fragment implements BarcodeImportViewModel.Listener {
 
     static final String ARG_SHIP_NO = "arg_ship_no";
 
