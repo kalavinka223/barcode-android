@@ -18,7 +18,7 @@ public interface BarcodeDetailDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable inserts(List<BarcodeDetail> barcodeDetails);
 
-    @Query("select * from barcode_detail where ship_no = :shipNo")
+    @Query("select * from barcode_detail where ship_no = :shipNo order by created_at")
     LiveData<List<BarcodeDetail>> listByShipNo(String shipNo);
 
     @Query("update barcode_detail set status = 1, updated_at = strftime('%Y-%m-%d %H:%M:%S', 'now','localtime')  " +
