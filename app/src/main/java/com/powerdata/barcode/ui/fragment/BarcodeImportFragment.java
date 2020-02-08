@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.powerdata.barcode.R;
+import com.powerdata.barcode.common.Constant;
 import com.powerdata.barcode.databinding.FragmentBarcodeImportBinding;
 import com.powerdata.barcode.viewModel.BarcodeImportViewModel;
 
@@ -31,8 +32,6 @@ import java.io.IOException;
 import es.dmoral.toasty.Toasty;
 
 public class BarcodeImportFragment extends Fragment implements BarcodeImportViewModel.Listener {
-
-    static final String ARG_SHIP_NO = "arg_ship_no";
 
     private static final int PICK_FILE = 1;
     private BarcodeImportViewModel viewModel;
@@ -76,7 +75,7 @@ public class BarcodeImportFragment extends Fragment implements BarcodeImportView
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString(ARG_SHIP_NO, viewModel.getShipNo().getValue());
+                bundle.putString(Constant.ARG_SHIP_NO, viewModel.getShipNo().getValue());
                 NavHostFragment.findNavController(BarcodeImportFragment.this)
                         .navigate(R.id.navigation_barcode_detail_list, bundle);
             }
@@ -87,7 +86,7 @@ public class BarcodeImportFragment extends Fragment implements BarcodeImportView
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString(ARG_SHIP_NO, viewModel.getShipNo().getValue());
+                bundle.putString(Constant.ARG_SHIP_NO, viewModel.getShipNo().getValue());
                 NavHostFragment.findNavController(BarcodeImportFragment.this)
                         .navigate(R.id.navigation_barcode_error_list, bundle);
             }

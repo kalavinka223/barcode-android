@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.powerdata.barcode.R;
+import com.powerdata.barcode.common.Constant;
 import com.powerdata.barcode.databinding.FragmentBarcodeErrorListBinding;
 import com.powerdata.barcode.model.BarcodeError;
 import com.powerdata.barcode.ui.adapter.BarcodeErrorAdapter;
@@ -48,7 +49,7 @@ public class BarcodeErrorListFragment extends Fragment implements BarcodeErrorLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         assert getArguments() != null;
-        shipNo = getArguments().getString(BarcodeImportFragment.ARG_SHIP_NO);
+        shipNo = getArguments().getString(Constant.ARG_SHIP_NO);
 
         FragmentBarcodeErrorListBinding binding = FragmentBarcodeErrorListBinding.inflate(inflater);
         binding.setLifecycleOwner(this);

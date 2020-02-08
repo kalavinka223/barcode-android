@@ -11,12 +11,16 @@ import com.powerdata.barcode.model.BarcodeDetail;
 import java.util.List;
 
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 @Dao
 public interface BarcodeDetailDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable inserts(List<BarcodeDetail> barcodeDetails);
+
+    @Query("select * from barcode_detail where barcode = :barcode and ship_no = :shipNo")
+    Maybe<BarcodeDetail> findById(String barcode, String shipNo);
 
     @Query("select * from barcode_detail where ship_no = :shipNo order by created_at")
     LiveData<List<BarcodeDetail>> listByShipNo(String shipNo);

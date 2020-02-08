@@ -6,6 +6,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.powerdata.barcode.R;
+import com.powerdata.barcode.common.Constant;
 import com.powerdata.barcode.databinding.FragmentBarcodeDetailListBinding;
 import com.powerdata.barcode.model.BarcodeDetail;
 import com.powerdata.barcode.ui.adapter.BarcodeDetailAdapter;
@@ -50,13 +54,14 @@ public class BarcodeDetailListFragment extends Fragment implements BarcodeDetail
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         assert getArguments() != null;
-        shipNo = getArguments().getString(BarcodeImportFragment.ARG_SHIP_NO);
+        shipNo = getArguments().getString(Constant.ARG_SHIP_NO);
 
         FragmentBarcodeDetailListBinding binding = FragmentBarcodeDetailListBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
         viewModel = ViewModelProviders.of(this).get(BarcodeDetailListViewModel.class);
         viewModel.setListener(this);
         binding.setViewModel(viewModel);
+        setHasOptionsMenu(true);
 
         final View root = binding.getRoot();
         setHasOptionsMenu(true);
@@ -129,6 +134,22 @@ public class BarcodeDetailListFragment extends Fragment implements BarcodeDetail
         viewModel.load(shipNo);
 
         return root;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.search_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.search_item) {
+            Bundle bundle = new Bundle();
+            bundle.putString(Constant.ARG_SHIP_NO, shipNo);
+            requireActivity().startSearch(null, false, bundle, false);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
