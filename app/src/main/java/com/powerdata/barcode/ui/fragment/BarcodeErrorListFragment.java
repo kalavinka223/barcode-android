@@ -51,7 +51,7 @@ public class BarcodeErrorListFragment extends Fragment implements BarcodeErrorLi
         assert getArguments() != null;
         shipNo = getArguments().getString(Constant.ARG_SHIP_NO);
 
-        FragmentBarcodeErrorListBinding binding = FragmentBarcodeErrorListBinding.inflate(inflater);
+        final FragmentBarcodeErrorListBinding binding = FragmentBarcodeErrorListBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
         viewModel = ViewModelProviders.of(this).get(BarcodeErrorListViewModel.class);
         viewModel.setListener(this);
@@ -63,20 +63,16 @@ public class BarcodeErrorListFragment extends Fragment implements BarcodeErrorLi
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar())
                 .setTitle(getString(R.string.title_error_detail, shipNo));
 
-        final RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        Button deleteButton = root.findViewById(R.id.delete_button);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
+        binding.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDeleteAlertDialog();
             }
         });
 
-        Button exportButton = root.findViewById(R.id.export_button);
-        exportButton.setOnClickListener(new View.OnClickListener() {
+        binding.exportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
@@ -91,7 +87,7 @@ public class BarcodeErrorListFragment extends Fragment implements BarcodeErrorLi
                 .observe(this, new Observer<List<BarcodeError>>() {
                     @Override
                     public void onChanged(List<BarcodeError> list) {
-                        recyclerView.setAdapter(new BarcodeErrorAdapter(list));
+                        binding.recyclerView.setAdapter(new BarcodeErrorAdapter(list));
                     }
                 });
 

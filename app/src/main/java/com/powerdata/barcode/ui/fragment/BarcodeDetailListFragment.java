@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +20,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.powerdata.barcode.R;
@@ -56,7 +54,7 @@ public class BarcodeDetailListFragment extends Fragment implements BarcodeDetail
         assert getArguments() != null;
         shipNo = getArguments().getString(Constant.ARG_SHIP_NO);
 
-        FragmentBarcodeDetailListBinding binding = FragmentBarcodeDetailListBinding.inflate(inflater);
+        final FragmentBarcodeDetailListBinding binding = FragmentBarcodeDetailListBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
         viewModel = ViewModelProviders.of(this).get(BarcodeDetailListViewModel.class);
         viewModel.setListener(this);
@@ -69,12 +67,9 @@ public class BarcodeDetailListFragment extends Fragment implements BarcodeDetail
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar())
                 .setTitle(getString(R.string.title_detail, shipNo));
 
-        final RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        TabLayout tabLayout = root.findViewById(R.id.tab_layout);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 BarcodeDetailListViewModel.Status status = BarcodeDetailListViewModel.Status.ALL;
@@ -103,16 +98,14 @@ public class BarcodeDetailListFragment extends Fragment implements BarcodeDetail
             }
         });
 
-        Button deleteButton = root.findViewById(R.id.delete_button);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
+        binding.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDeleteAlertDialog();
             }
         });
 
-        Button exportButton = root.findViewById(R.id.export_button);
-        exportButton.setOnClickListener(new View.OnClickListener() {
+        binding.exportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
@@ -127,7 +120,7 @@ public class BarcodeDetailListFragment extends Fragment implements BarcodeDetail
                 .observe(this, new Observer<List<BarcodeDetail>>() {
                     @Override
                     public void onChanged(List<BarcodeDetail> list) {
-                        recyclerView.setAdapter(new BarcodeDetailAdapter(list));
+                        binding.recyclerView.setAdapter(new BarcodeDetailAdapter(list));
                     }
                 });
 

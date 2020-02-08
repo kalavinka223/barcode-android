@@ -13,9 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,7 +42,7 @@ public class BarcodeCollectionFragment extends Fragment implements BarcodeCollec
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        FragmentBarcodeCollectionBinding binding = FragmentBarcodeCollectionBinding.inflate(inflater);
+        final FragmentBarcodeCollectionBinding binding = FragmentBarcodeCollectionBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
         viewModel = ViewModelProviders.of(this).get(BarcodeCollectionViewModel.class);
         viewModel.setListener(this);
@@ -53,8 +50,7 @@ public class BarcodeCollectionFragment extends Fragment implements BarcodeCollec
         final View root = binding.getRoot();
         setHasOptionsMenu(true);
 
-        Spinner spinner = root.findViewById(R.id.ship_no_spinner);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.shipNoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 viewModel.setShipNoItemPosition(position);
@@ -66,20 +62,17 @@ public class BarcodeCollectionFragment extends Fragment implements BarcodeCollec
             }
         });
 
-        final RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        binding.recyclerView.setLayoutManager(layoutManager);
 
-        Button deleteButton = root.findViewById(R.id.delete_button);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
+        binding.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDeleteAlertDialog();
             }
         });
 
-        Button exportButton = root.findViewById(R.id.export_button);
-        exportButton.setOnClickListener(new View.OnClickListener() {
+        binding.exportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
@@ -94,7 +87,7 @@ public class BarcodeCollectionFragment extends Fragment implements BarcodeCollec
                 .observe(this, new Observer<List<BarcodeInfo>>() {
                     @Override
                     public void onChanged(List<BarcodeInfo> list) {
-                        recyclerView.setAdapter(new BarcodeAdapter(list));
+                        binding.recyclerView.setAdapter(new BarcodeAdapter(list));
                     }
                 });
 

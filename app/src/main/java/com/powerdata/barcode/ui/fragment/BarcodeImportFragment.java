@@ -13,8 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,7 +36,7 @@ public class BarcodeImportFragment extends Fragment implements BarcodeImportView
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        FragmentBarcodeImportBinding binding = FragmentBarcodeImportBinding.inflate(inflater);
+        final FragmentBarcodeImportBinding binding = FragmentBarcodeImportBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
         viewModel = ViewModelProviders.of(this).get(BarcodeImportViewModel.class);
         viewModel.setListener(this);
@@ -46,8 +44,7 @@ public class BarcodeImportFragment extends Fragment implements BarcodeImportView
         final View root = binding.getRoot();
         setHasOptionsMenu(true);
 
-        Spinner spinner = root.findViewById(R.id.ship_no_spinner);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.shipNoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 viewModel.setShipNoItemPosition(position);
@@ -59,8 +56,7 @@ public class BarcodeImportFragment extends Fragment implements BarcodeImportView
             }
         });
 
-        Button importButton = root.findViewById(R.id.import_csv_button);
-        importButton.setOnClickListener(new View.OnClickListener() {
+        binding.importCsvButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -70,8 +66,7 @@ public class BarcodeImportFragment extends Fragment implements BarcodeImportView
             }
         });
 
-        Button detailButton = root.findViewById(R.id.view_detail_button);
-        detailButton.setOnClickListener(new View.OnClickListener() {
+        binding.viewDetailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
@@ -81,8 +76,7 @@ public class BarcodeImportFragment extends Fragment implements BarcodeImportView
             }
         });
 
-        Button errorButton = root.findViewById(R.id.view_error_button);
-        errorButton.setOnClickListener(new View.OnClickListener() {
+        binding.viewErrorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
