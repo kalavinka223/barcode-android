@@ -3,11 +3,9 @@ package com.powerdata.barcode.model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
-@Entity(tableName = "barcode_info")
+@Entity(tableName = "barcode_info", primaryKeys = {"barcode", "ship_no"})
 public class BarcodeInfo {
-    @PrimaryKey
     @NonNull
     public String barcode = "";
 
@@ -15,5 +13,6 @@ public class BarcodeInfo {
     public String createdAt;
 
     @ColumnInfo(name = "ship_no")
-    public String shipNo;
+    @NonNull
+    public String shipNo = "";
 }

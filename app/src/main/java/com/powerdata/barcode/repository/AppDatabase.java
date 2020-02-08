@@ -8,7 +8,7 @@ import com.powerdata.barcode.model.BarcodeError;
 import com.powerdata.barcode.model.BarcodeInfo;
 
 @Database(entities = {BarcodeInfo.class, BarcodeDetail.class, BarcodeError.class},
-        version = 1, exportSchema = false)
+        version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract BarcodeInfoDao barcodeInfoDao();
 

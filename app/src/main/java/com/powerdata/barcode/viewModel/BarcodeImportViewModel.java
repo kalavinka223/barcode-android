@@ -152,7 +152,7 @@ public class BarcodeImportViewModel extends ViewModel {
         final String s = barcode.getValue();
         barcode.setValue("");
         if (StringUtils.isNotEmpty(s)) {
-            Disposable disposable = detailDao.updateStatusByBarcode(s)
+            Disposable disposable = detailDao.updateStatus(s, shipNo.getValue())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<Integer>() {

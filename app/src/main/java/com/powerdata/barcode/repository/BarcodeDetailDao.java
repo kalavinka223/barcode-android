@@ -21,8 +21,9 @@ public interface BarcodeDetailDao {
     @Query("select * from barcode_detail where ship_no = :shipNo")
     LiveData<List<BarcodeDetail>> listByShipNo(String shipNo);
 
-    @Query("update barcode_detail set status = 1, updated_at = strftime('%Y-%m-%d %H:%M:%S', 'now','localtime')  where barcode = :barcode")
-    Single<Integer> updateStatusByBarcode(String barcode);
+    @Query("update barcode_detail set status = 1, updated_at = strftime('%Y-%m-%d %H:%M:%S', 'now','localtime')  " +
+            "where barcode = :barcode and ship_no = :shipNo")
+    Single<Integer> updateStatus(String barcode, String shipNo);
 
     @Query("delete from barcode_detail where ship_no = :shipNo")
     Completable deleteByShipNo(String shipNo);
