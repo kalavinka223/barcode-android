@@ -2,6 +2,7 @@ package com.powerdata.barcode.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
@@ -150,6 +151,7 @@ public class BarcodeCollectionFragment extends Fragment implements BarcodeCollec
 
     @Override
     public void onSaveSuccess() {
+        MediaPlayer.create(requireContext(), R.raw.success).start();
         Toasty.success(requireContext(), R.string.message_save_success).show();
     }
 

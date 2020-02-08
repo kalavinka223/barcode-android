@@ -2,6 +2,7 @@ package com.powerdata.barcode.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
@@ -128,11 +129,13 @@ public class BarcodeImportFragment extends Fragment implements BarcodeImportView
 
     @Override
     public void onSaveSuccess() {
+        MediaPlayer.create(requireContext(), R.raw.success).start();
         Toasty.success(requireContext(), R.string.message_save_success).show();
     }
 
     @Override
     public void onSaveError() {
+        MediaPlayer.create(requireContext(), R.raw.error).start();
         Toasty.warning(requireContext(), R.string.message_save_error).show();
     }
 
