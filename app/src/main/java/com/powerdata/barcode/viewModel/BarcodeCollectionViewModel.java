@@ -98,7 +98,8 @@ public class BarcodeCollectionViewModel extends ViewModel {
                 .subscribe(new Action() {
                     @Override
                     public void run() {
-
+                        if (listener != null)
+                            listener.onDeleteSuccess();
                     }
                 });
         compositeDisposable.add(disposable);
@@ -144,6 +145,8 @@ public class BarcodeCollectionViewModel extends ViewModel {
 
     public interface Listener {
         void onSaveSuccess();
+
+        void onDeleteSuccess();
 
         void onExportSuccess();
     }

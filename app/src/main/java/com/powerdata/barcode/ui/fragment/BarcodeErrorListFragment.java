@@ -8,7 +8,6 @@ import android.os.ParcelFileDescriptor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.powerdata.barcode.R;
 import com.powerdata.barcode.common.Constant;
@@ -88,6 +86,7 @@ public class BarcodeErrorListFragment extends Fragment implements BarcodeErrorLi
                     @Override
                     public void onChanged(List<BarcodeError> list) {
                         binding.recyclerView.setAdapter(new BarcodeErrorAdapter(list));
+                        binding.noDataTextView.setVisibility(list.size() > 0 ? View.GONE : View.VISIBLE);
                     }
                 });
 

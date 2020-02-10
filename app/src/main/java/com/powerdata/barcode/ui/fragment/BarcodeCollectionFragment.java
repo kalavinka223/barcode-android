@@ -102,6 +102,7 @@ public class BarcodeCollectionFragment extends Fragment implements BarcodeCollec
                     @Override
                     public void onChanged(List<BarcodeInfo> list) {
                         binding.recyclerView.setAdapter(new BarcodeAdapter(list));
+                        binding.noDataTextView.setVisibility(list.size() > 0 ? View.GONE : View.VISIBLE);
                     }
                 });
 
@@ -152,5 +153,10 @@ public class BarcodeCollectionFragment extends Fragment implements BarcodeCollec
     @Override
     public void onExportSuccess() {
         Toasty.success(requireContext(), R.string.message_export_success).show();
+    }
+
+    @Override
+    public void onDeleteSuccess() {
+        Toasty.success(requireContext(), R.string.message_delete_success).show();
     }
 }

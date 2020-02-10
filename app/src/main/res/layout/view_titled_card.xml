@@ -17,6 +17,7 @@
             android:layout_marginBottom="8dp"
             android:textColor="@color/orange"
             android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/subtitle_text_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
