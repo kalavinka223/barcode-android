@@ -17,7 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -25,12 +24,10 @@ import com.google.android.material.tabs.TabLayout;
 import com.powerdata.barcode.R;
 import com.powerdata.barcode.common.Constant;
 import com.powerdata.barcode.databinding.FragmentBarcodeDetailListBinding;
-import com.powerdata.barcode.model.BarcodeDetail;
 import com.powerdata.barcode.ui.adapter.BarcodeDetailAdapter;
 import com.powerdata.barcode.viewModel.BarcodeDetailListViewModel;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
@@ -98,31 +95,20 @@ public class BarcodeDetailListFragment extends Fragment implements BarcodeDetail
             }
         });
 
-        binding.deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDeleteAlertDialog();
-            }
-        });
+        binding.deleteButton.setOnClickListener(v -> showDeleteAlertDialog());
 
-        binding.exportButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("text/csv");
-                intent.putExtra(Intent.EXTRA_TITLE, String.format("船%s-明细.csv", shipNo));
-                startActivityForResult(intent, CREATE_FILE);
-            }
+        binding.exportButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("text/csv");
+            intent.putExtra(Intent.EXTRA_TITLE, String.format("船%s-明细.csv", shipNo));
+            startActivityForResult(intent, CREATE_FILE);
         });
 
         viewModel.getDetails()
-                .observe(this, new Observer<List<BarcodeDetail>>() {
-                    @Override
-                    public void onChanged(List<BarcodeDetail> list) {
-                        binding.recyclerView.setAdapter(new BarcodeDetailAdapter(list));
-                        binding.noDataTextView.setVisibility(list.size() > 0 ? View.GONE : View.VISIBLE);
-                    }
+                .observe(this, list -> {
+                    binding.recyclerView.setAdapter(new BarcodeDetailAdapter(list));
+                    binding.noDataTextView.setVisibility(list.size() > 0 ? View.GONE : View.VISIBLE);
                 });
 
         viewModel.load(shipNo);

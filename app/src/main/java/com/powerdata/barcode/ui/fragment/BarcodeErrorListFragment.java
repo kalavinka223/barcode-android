@@ -14,19 +14,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.powerdata.barcode.R;
 import com.powerdata.barcode.common.Constant;
 import com.powerdata.barcode.databinding.FragmentBarcodeErrorListBinding;
-import com.powerdata.barcode.model.BarcodeError;
 import com.powerdata.barcode.ui.adapter.BarcodeErrorAdapter;
 import com.powerdata.barcode.viewModel.BarcodeErrorListViewModel;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
@@ -64,31 +61,20 @@ public class BarcodeErrorListFragment extends Fragment implements BarcodeErrorLi
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        binding.deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDeleteAlertDialog();
-            }
-        });
+        binding.deleteButton.setOnClickListener(v -> showDeleteAlertDialog());
 
-        binding.exportButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("text/csv");
-                intent.putExtra(Intent.EXTRA_TITLE, String.format("船%s-失败明细.csv", shipNo));
-                startActivityForResult(intent, CREATE_FILE);
-            }
+        binding.exportButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("text/csv");
+            intent.putExtra(Intent.EXTRA_TITLE, String.format("船%s-失败明细.csv", shipNo));
+            startActivityForResult(intent, CREATE_FILE);
         });
 
         viewModel.getErrors()
-                .observe(this, new Observer<List<BarcodeError>>() {
-                    @Override
-                    public void onChanged(List<BarcodeError> list) {
-                        binding.recyclerView.setAdapter(new BarcodeErrorAdapter(list));
-                        binding.noDataTextView.setVisibility(list.size() > 0 ? View.GONE : View.VISIBLE);
-                    }
+                .observe(this, list -> {
+                    binding.recyclerView.setAdapter(new BarcodeErrorAdapter(list));
+                    binding.noDataTextView.setVisibility(list.size() > 0 ? View.GONE : View.VISIBLE);
                 });
 
         viewModel.load(shipNo);

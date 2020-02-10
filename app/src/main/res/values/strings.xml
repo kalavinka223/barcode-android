@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Barcode</string>
+    <string name="app_name">钢卷扫描</string>
     <string name="title_import">导入识别</string>
     <string name="title_collection">直接采集</string>
     <string name="title_detail">船 %s 明细</string>

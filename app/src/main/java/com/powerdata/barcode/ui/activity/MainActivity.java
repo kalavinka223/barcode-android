@@ -2,14 +2,10 @@ package com.powerdata.barcode.ui.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -36,15 +32,12 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
 
-        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-            @Override
-            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if (destination.getId() == R.id.navigation_barcode_import
-                        || destination.getId() == R.id.navigation_barcode_collection)
-                    navView.setVisibility(View.VISIBLE);
-                else
-                    navView.setVisibility(View.GONE);
-            }
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.navigation_barcode_import
+                    || destination.getId() == R.id.navigation_barcode_collection)
+                navView.setVisibility(View.VISIBLE);
+            else
+                navView.setVisibility(View.GONE);
         });
     }
 

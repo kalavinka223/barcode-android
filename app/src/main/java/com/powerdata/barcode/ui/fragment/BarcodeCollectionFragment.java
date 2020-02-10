@@ -6,31 +6,26 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.powerdata.barcode.R;
 import com.powerdata.barcode.databinding.FragmentBarcodeCollectionBinding;
-import com.powerdata.barcode.model.BarcodeInfo;
 import com.powerdata.barcode.ui.adapter.BarcodeAdapter;
 import com.powerdata.barcode.viewModel.BarcodeCollectionViewModel;
 
 import java.io.IOException;
-import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
@@ -67,43 +62,29 @@ public class BarcodeCollectionFragment extends Fragment implements BarcodeCollec
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.recyclerView.setLayoutManager(layoutManager);
 
-        binding.deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDeleteAlertDialog();
-            }
+        binding.deleteButton.setOnClickListener(v -> showDeleteAlertDialog());
+
+        binding.exportButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("text/csv");
+            intent.putExtra(Intent.EXTRA_TITLE, String.format("船%s-直接采集.csv", viewModel.getShipNo()));
+            startActivityForResult(intent, CREATE_FILE);
         });
 
-        binding.exportButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("text/csv");
-                intent.putExtra(Intent.EXTRA_TITLE, String.format("船%s-直接采集.csv",viewModel.getShipNo()));
-                startActivityForResult(intent, CREATE_FILE);
+        binding.barcodeEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_NULL || actionId == EditorInfo.IME_ACTION_DONE) {
+                viewModel.save();
+                return true;
             }
-        });
-
-        binding.barcodeEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_NULL || actionId == EditorInfo.IME_ACTION_DONE) {
-                    viewModel.save();
-                    return true;
-                }
-                return false;
-            }
+            return false;
         });
         binding.barcodeEditText.requestFocus();
 
         viewModel.getBarcodeInfos()
-                .observe(this, new Observer<List<BarcodeInfo>>() {
-                    @Override
-                    public void onChanged(List<BarcodeInfo> list) {
-                        binding.recyclerView.setAdapter(new BarcodeAdapter(list));
-                        binding.noDataTextView.setVisibility(list.size() > 0 ? View.GONE : View.VISIBLE);
-                    }
+                .observe(this, list -> {
+                    binding.recyclerView.setAdapter(new BarcodeAdapter(list));
+                    binding.noDataTextView.setVisibility(list.size() > 0 ? View.GONE : View.VISIBLE);
                 });
 
         return root;

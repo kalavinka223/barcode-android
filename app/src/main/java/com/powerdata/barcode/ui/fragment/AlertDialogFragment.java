@@ -2,7 +2,6 @@ package com.powerdata.barcode.ui.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -38,19 +37,13 @@ public class AlertDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(title)
                 .setMessage(message)
-                .setPositiveButton(R.string.text_ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (listener != null)
-                            listener.onDialogPositiveClick(AlertDialogFragment.this);
-                    }
+                .setPositiveButton(R.string.text_ok, (dialog, which) -> {
+                    if (listener != null)
+                        listener.onDialogPositiveClick(AlertDialogFragment.this);
                 })
-                .setNegativeButton(R.string.text_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (listener != null)
-                            listener.onDialogNegativeClick(AlertDialogFragment.this);
-                    }
+                .setNegativeButton(R.string.text_cancel, (dialog, which) -> {
+                    if (listener != null)
+                        listener.onDialogNegativeClick(AlertDialogFragment.this);
                 });
         return builder.create();
     }

@@ -6,13 +6,11 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,45 +56,33 @@ public class BarcodeImportFragment extends Fragment implements BarcodeImportView
             }
         });
 
-        binding.importCsvButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("*/*");
-                startActivityForResult(intent, PICK_FILE);
-            }
+        binding.importCsvButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("*/*");
+            startActivityForResult(intent, PICK_FILE);
         });
 
-        binding.viewDetailButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString(Constant.ARG_SHIP_NO, viewModel.getShipNo().getValue());
-                NavHostFragment.findNavController(BarcodeImportFragment.this)
-                        .navigate(R.id.navigation_barcode_detail_list, bundle);
-            }
+        binding.viewDetailButton.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString(Constant.ARG_SHIP_NO, viewModel.getShipNo().getValue());
+            NavHostFragment.findNavController(BarcodeImportFragment.this)
+                    .navigate(R.id.navigation_barcode_detail_list, bundle);
         });
 
-        binding.viewErrorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString(Constant.ARG_SHIP_NO, viewModel.getShipNo().getValue());
-                NavHostFragment.findNavController(BarcodeImportFragment.this)
-                        .navigate(R.id.navigation_barcode_error_list, bundle);
-            }
+        binding.viewErrorButton.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString(Constant.ARG_SHIP_NO, viewModel.getShipNo().getValue());
+            NavHostFragment.findNavController(BarcodeImportFragment.this)
+                    .navigate(R.id.navigation_barcode_error_list, bundle);
         });
 
-        binding.barcodeEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_NULL || actionId == EditorInfo.IME_ACTION_DONE) {
-                    viewModel.save();
-                    return true;
-                }
-                return false;
+        binding.barcodeEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_NULL || actionId == EditorInfo.IME_ACTION_DONE) {
+                viewModel.save();
+                return true;
             }
+            return false;
         });
         binding.barcodeEditText.requestFocus();
 
