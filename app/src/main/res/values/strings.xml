@@ -11,7 +11,7 @@
     <string name="hint_barcode_edit">输入钢卷号</string>
     <string name="title_save">保存</string>
     <string name="message_save_success">保存成功</string>
-    <string name="message_save_error">保存失败</string>
+    <string name="message_save_error">钢卷号不存在</string>
     <string name="message_delete_success">删除成功</string>
     <string name="message_import_success">导入成功</string>
     <string name="message_export_success">导出成功</string>

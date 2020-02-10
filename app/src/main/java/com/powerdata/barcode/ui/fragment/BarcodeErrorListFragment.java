@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -44,7 +45,7 @@ public class BarcodeErrorListFragment extends Fragment implements BarcodeErrorLi
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         assert getArguments() != null;
         shipNo = getArguments().getString(Constant.ARG_SHIP_NO);
@@ -76,7 +77,7 @@ public class BarcodeErrorListFragment extends Fragment implements BarcodeErrorLi
                 Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("text/csv");
-                intent.putExtra(Intent.EXTRA_TITLE, "船" + shipNo + "失败明细.csv");
+                intent.putExtra(Intent.EXTRA_TITLE, String.format("船%s-失败明细.csv", shipNo));
                 startActivityForResult(intent, CREATE_FILE);
             }
         });

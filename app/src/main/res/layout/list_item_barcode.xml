@@ -15,6 +15,7 @@
         android:layout_weight="1"
         android:textColor="@color/orange"
         android:textSize="15sp"
+        android:textStyle="bold"
         tools:text="15A35023019002" />
 
     <TextView
@@ -23,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="end"
-        android:textSize="13sp"
         tools:text="1970-01-01 00:00:00" />
 
 </LinearLayout>

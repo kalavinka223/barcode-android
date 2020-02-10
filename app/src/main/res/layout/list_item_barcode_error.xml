@@ -14,6 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="@color/orange"
+        android:textSize="15sp"
+        android:textStyle="bold"
         tool:text="15B18036091003" />
 
     <TextView
