@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -121,7 +122,7 @@ public class BarcodeImportViewModel extends ViewModel {
             detail.pileNo = record.get(4);
             detail.mark = record.get(5);
             detail.createdAt = Util.formatDate(System.currentTimeMillis());
-            detail.shipNo = shipNo.getValue();
+            detail.shipNo = Objects.requireNonNull(shipNo.getValue());
             detail.status = 0;
             list.add(detail);
         }
@@ -173,7 +174,7 @@ public class BarcodeImportViewModel extends ViewModel {
     private void saveError(String barcode) {
         BarcodeError error = new BarcodeError();
         error.createdAt = Util.formatDate(System.currentTimeMillis());
-        error.shipNo = shipNo.getValue();
+        error.shipNo = Objects.requireNonNull(shipNo.getValue());
         error.barcode = barcode;
         Disposable disposable = errorDao.insert(error)
                 .subscribeOn(Schedulers.io())
