@@ -6,13 +6,13 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,7 +42,6 @@ public class BarcodeImportFragment extends Fragment implements BarcodeImportView
         viewModel.setListener(this);
         binding.setViewModel(viewModel);
         final View root = binding.getRoot();
-        setHasOptionsMenu(true);
 
         binding.shipNoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -86,21 +85,19 @@ public class BarcodeImportFragment extends Fragment implements BarcodeImportView
             }
         });
 
+        binding.barcodeEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_NULL || actionId == EditorInfo.IME_ACTION_DONE) {
+                    viewModel.save();
+                    return true;
+                }
+                return false;
+            }
+        });
+        binding.barcodeEditText.requestFocus();
+
         return root;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.save_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.save_item) {
-            viewModel.save();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
