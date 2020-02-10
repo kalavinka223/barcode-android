@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.powerdata.barcode.R;
 import com.powerdata.barcode.common.Constant;
 import com.powerdata.barcode.databinding.FragmentBarcodeImportBinding;
+import com.powerdata.barcode.ui.component.BarcodeInputFilter;
 import com.powerdata.barcode.viewModel.BarcodeImportViewModel;
 
 import java.io.IOException;
@@ -84,6 +86,9 @@ public class BarcodeImportFragment extends Fragment implements BarcodeImportView
             }
             return false;
         });
+
+        binding.barcodeEditText.setFilters(new InputFilter[]{new BarcodeInputFilter()});
+
         binding.barcodeEditText.requestFocus();
 
         return root;

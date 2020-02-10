@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.powerdata.barcode.R;
 import com.powerdata.barcode.databinding.FragmentBarcodeCollectionBinding;
 import com.powerdata.barcode.ui.adapter.BarcodeAdapter;
+import com.powerdata.barcode.ui.component.BarcodeInputFilter;
 import com.powerdata.barcode.viewModel.BarcodeCollectionViewModel;
 
 import java.io.IOException;
@@ -79,6 +81,9 @@ public class BarcodeCollectionFragment extends Fragment implements BarcodeCollec
             }
             return false;
         });
+
+        binding.barcodeEditText.setFilters(new InputFilter[]{new BarcodeInputFilter()});
+
         binding.barcodeEditText.requestFocus();
 
         viewModel.getBarcodeInfos()
