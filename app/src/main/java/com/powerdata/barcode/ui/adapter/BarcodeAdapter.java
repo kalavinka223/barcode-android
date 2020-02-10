@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.powerdata.barcode.R;
-import com.powerdata.barcode.common.Util;
 import com.powerdata.barcode.model.BarcodeInfo;
 
 import java.util.List;

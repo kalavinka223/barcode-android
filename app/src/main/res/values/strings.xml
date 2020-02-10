@@ -22,9 +22,6 @@
         <item>C</item>
         <item>D</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="text_export">导出</string>
     <string name="text_delete">删除</string>
     <string name="text_status">状态</string>
@@ -35,4 +32,12 @@
     <string name="text_search">搜索</string>
     <string name="text_all">全部</string>
     <string name="text_no_data">没有数据</string>
+    <string name="text_created_at">创建时间</string>
+    <string name="text_updated_at">扫描时间</string>
+    <string name="text_pile_no">货垛号</string>
+    <string name="text_thickness">厚度</string>
+    <string name="text_weight">重量</string>
+    <string name="text_mark">标记</string>
+    <string name="title_search">搜索</string>
+    <string name="text_barcode_not_existed">钢卷号不存在</string>
 </resources>
