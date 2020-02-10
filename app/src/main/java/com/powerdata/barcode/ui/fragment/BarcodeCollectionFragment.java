@@ -80,7 +80,7 @@ public class BarcodeCollectionFragment extends Fragment implements BarcodeCollec
                 Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("text/csv");
-                intent.putExtra(Intent.EXTRA_TITLE, "直接采集.csv");
+                intent.putExtra(Intent.EXTRA_TITLE, String.format("船%s-直接采集.csv",viewModel.getShipNo()));
                 startActivityForResult(intent, CREATE_FILE);
             }
         });

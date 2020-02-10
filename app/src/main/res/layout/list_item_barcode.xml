@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp"
+    android:padding="4dp"
     android:paddingStart="16dp"
     android:paddingEnd="16dp">
 
@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="@color/orange"
+        android:textSize="15sp"
         tools:text="15A35023019002" />
 
     <TextView
@@ -22,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="end"
+        android:textSize="13sp"
         tools:text="1970-01-01 00:00:00" />
 
 </LinearLayout>
