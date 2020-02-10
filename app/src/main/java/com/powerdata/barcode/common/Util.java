@@ -11,4 +11,8 @@ public class Util {
         return sdf.format(new Date(time));
     }
 
+    public static String currentTime() {
+        return formatDate(System.currentTimeMillis());
+    }
+
 }

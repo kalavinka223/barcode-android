@@ -33,4 +33,6 @@
     <string name="text_ok">确定</string>
     <string name="text_cancel">取消</string>
     <string name="text_search">搜索</string>
+    <string name="text_all">全部</string>
+    <string name="text_no_data">没有数据</string>
 </resources>

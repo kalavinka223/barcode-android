@@ -121,7 +121,7 @@ public class BarcodeImportViewModel extends ViewModel {
             detail.weight = Float.valueOf(record.get(3));
             detail.pileNo = record.get(4);
             detail.mark = record.get(5);
-            detail.createdAt = Util.formatDate(System.currentTimeMillis());
+            detail.createdAt = Util.currentTime();
             detail.shipNo = Objects.requireNonNull(shipNo.getValue());
             detail.status = 0;
             list.add(detail);
@@ -173,7 +173,7 @@ public class BarcodeImportViewModel extends ViewModel {
 
     private void saveError(String barcode) {
         BarcodeError error = new BarcodeError();
-        error.createdAt = Util.formatDate(System.currentTimeMillis());
+        error.createdAt = Util.currentTime();
         error.shipNo = Objects.requireNonNull(shipNo.getValue());
         error.barcode = barcode;
         Disposable disposable = errorDao.insert(error)

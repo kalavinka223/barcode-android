@@ -29,6 +29,9 @@ import java.io.IOException;
 
 import es.dmoral.toasty.Toasty;
 
+/**
+ * 识别导入页面
+ */
 public class BarcodeImportFragment extends Fragment implements BarcodeImportViewModel.Listener {
 
     private static final int PICK_FILE = 1;

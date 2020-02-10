@@ -8,9 +8,6 @@ import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -37,6 +34,9 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
+/**
+ * 直接采集页面
+ */
 public class BarcodeCollectionFragment extends Fragment implements BarcodeCollectionViewModel.Listener {
 
     private static final int CREATE_FILE = 1;

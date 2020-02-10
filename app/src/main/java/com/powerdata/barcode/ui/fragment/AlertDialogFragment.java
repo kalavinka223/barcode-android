@@ -20,11 +20,11 @@ public class AlertDialogFragment extends DialogFragment {
     public AlertDialogFragment() {
     }
 
-    public void setTitle(String title) {
+    void setTitle(String title) {
         this.title = title;
     }
 
-    public void setMessage(String message) {
+    void setMessage(String message) {
         this.message = message;
     }
 

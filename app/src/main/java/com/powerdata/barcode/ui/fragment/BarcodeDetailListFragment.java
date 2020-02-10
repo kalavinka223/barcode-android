@@ -111,7 +111,7 @@ public class BarcodeDetailListFragment extends Fragment implements BarcodeDetail
                 Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("text/csv");
-                intent.putExtra(Intent.EXTRA_TITLE, "船" + shipNo + "明细.csv");
+                intent.putExtra(Intent.EXTRA_TITLE, String.format("船%s-明细.csv", shipNo));
                 startActivityForResult(intent, CREATE_FILE);
             }
         });
@@ -121,6 +121,7 @@ public class BarcodeDetailListFragment extends Fragment implements BarcodeDetail
                     @Override
                     public void onChanged(List<BarcodeDetail> list) {
                         binding.recyclerView.setAdapter(new BarcodeDetailAdapter(list));
+                        binding.noDataTextView.setVisibility(list.size() > 0 ? View.GONE : View.VISIBLE);
                     }
                 });
 

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -73,9 +74,9 @@ public class BarcodeCollectionViewModel extends ViewModel {
         barcode.setValue("");
         if (StringUtils.isNotEmpty(code)) {
             BarcodeInfo info = new BarcodeInfo();
-            info.shipNo = shipNo.getValue();
+            info.shipNo = Objects.requireNonNull(shipNo.getValue());
             info.barcode = code;
-            info.createdAt = Util.formatDate(System.currentTimeMillis());
+            info.createdAt = Util.currentTime();
             Disposable disposable = infoDao.insert(info)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
