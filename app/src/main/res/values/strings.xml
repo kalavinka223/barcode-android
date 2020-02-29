@@ -40,4 +40,5 @@
     <string name="text_mark">标记</string>
     <string name="title_search">搜索</string>
     <string name="text_barcode_not_existed">钢卷号不存在</string>
+    <string name="text_welcome">首钢欢迎您</string>
 </resources>
